@@ -21,7 +21,14 @@ The RHEL nodes are already created with the configuration:
 - Nodes 4,5,6 exist on the CENTOS7_Dev Life Cycle Environment
 
 We want nodes 1,2,3 to be part of separate Lifecycle Environments. To do this follow:
-1. 
+1. Go to Hosts -> All Hosts
+2. Select the three dots on the far right for node2.example.com and select "Change content view environments"
+![Content-View-Initial-Setup](images/Content-View-Initial-Setup.png)
+3. Select RHEL7_QA
+4. Select the RHEL7 content view
+5. Check the box labelled "Update the host immediately via remote execution"
+![Edit content view assignment](images/edit-content-view-assignment.png)
+6. 
 
 Note: Launch each template once it has been created.
 
