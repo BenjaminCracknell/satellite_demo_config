@@ -20,7 +20,7 @@ The RHEL nodes are already created with the configuration:
 - Nodes 1,2,3 exist on the RHEL7_Dev Life Cycle Environment
 - Nodes 4,5,6 exist on the CENTOS7_Dev Life Cycle Environment
 
-We want nodes 1,2,3 to be part of separate Lifecycle Environments. To do this follow:
+We want nodes 1,2,3 to be part of separate Lifecycle Environments. Set Node2 to QA, and Node3 to Prod:
 1. Go to Hosts -> All Hosts
 2. Select the three dots on the far right for node2.example.com and select "Change content view environments"
 ![Content-View-Initial-Setup](images/Content-View-Initial-Setup.png)
@@ -28,7 +28,29 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments. To do this fo
 4. Select the RHEL7 content view
 5. Check the box labelled "Update the host immediately via remote execution"
 ![Edit content view assignment](images/edit-content-view-assignment.png)
-6. 
+6. Do the same for node3 ensuring to select RHEL7_Prod
+
+Next we need to update the inventories of these sources
+1. Login to the AAP Console
+2. Go to Resources -> Templates
+3. Select the "CONTROLLER / Update inventories via dynamic sources" template
+4. Launch Job
+5. Select the RHEL7 inventory in the first box
+6. Select the Dev Environment in the second box
+7. Run the Job
+8. Repeat steps 2-7 selecting the QA Environment in the second box of the template
+9. Repeat steps 2-7 selecting the Prod Environment in the second box of the template
+
+TODO: Encountering errors with the above - verify correct method
+
+
+
+
+
+
+
+
+
 
 Note: Launch each template once it has been created.
 
