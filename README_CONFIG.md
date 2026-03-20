@@ -5,12 +5,14 @@
 
 1. Log in to the [Red Hat Demo System](https://demo.redhat.com)
 2. In the catalog, search for "Ansible Workshop - Automated Satellite Workshop"
-3. Select Size "Training" so you only get one instances, and fill out the other values before submitting
-4. Wait for the workshop to deploy
-5. Click the link provided in the resulting email e.g. [http://<GUID>.example.opentlc.com](http://<GUID>.example.opentlc.com)
-6. Enter your name and an email address (note that these aren't recorded anywhere).
-7. Note the workbench SSH user, likely to be student1, and the workbench password
-8. Note the workbench SSH control node DNS access command, e.g. `ssh student1@student1.<GUID>.example.opentlc.com`
+3. Select Activity "Practice/Enablement" and Purpose "Learning about the product"
+4. Fill out the other values before submitting
+5. Wait for the workshop to deploy
+6. You will receive an email to say that your workshop is ready
+7. Follow the last link to manage your RHDP service
+8. From here you can access the intructions, each of the applications (VS Code, AAP, Satellite, RHEL Web Console), and instructions to ssh into the Linux Developer Host (ssh student@ansible-[workshop-name].opentlc.com)
+9. Note the workbench SSH user, likely to be student, and the workbench password
+10. Note the admin user and matching password too
 
 # Prepare Satellite and the RHEL nodes using AAP Controller
 
