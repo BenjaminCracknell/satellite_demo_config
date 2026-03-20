@@ -16,6 +16,10 @@
 
 # Prepare Satellite and the RHEL nodes using AAP Controller
 
+The RHEL nodes are already created with the configuration:
+- Nodes 1,2,3 exist on the RHEL7_Dev Content View environment
+- Nodes 4,5,6 exist on the CENTOS7_Dev Content View environment
+
 Note: Launch each template once it has been created.
 
 1. Complete all setup tasks for Exercise 0: Setup here:
