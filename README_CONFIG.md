@@ -1,6 +1,6 @@
 # Deploying the Environment
 
-
+[Lab original instructions](https://github.com/ansible/workshops/tree/devel/exercises/rhdp_auto_satellite)
 ## RHPDS
 
 1. Log in to the [Red Hat Demo System](https://demo.redhat.com)
@@ -20,7 +20,8 @@ The RHEL nodes are already created with the configuration:
 - Nodes 1,2,3 exist on the RHEL7_Dev Life Cycle Environment
 - Nodes 4,5,6 exist on the CENTOS7_Dev Life Cycle Environment
 
-We want nodes 1,2,3 to be part of separate Lifecycle Environments. Set Node2 to QA, and Node3 to Prod:
+We want nodes 1,2,3 to be part of separate Lifecycle Environments. 
+#### 1. Set Node2 to QA, and Node3 to Prod:
 1. Go to Hosts -> All Hosts
 2. Select the three dots on the far right for node2.example.com and select "Change content view environments"
 ![Content-View-Initial-Setup](images/Content-View-Initial-Setup.png)
@@ -30,7 +31,7 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments. Set Node2 to 
 ![Edit content view assignment](images/edit-content-view-assignment.png)
 6. Do the same for node3 ensuring to select RHEL7_Prod
 
-Next we need to update the inventories of these sources
+#### 2. Next we need to update the inventories of these sources
 1. Login to the AAP Console
 2. Go to Resources -> Templates
 3. Select the "CONTROLLER / Update inventories via dynamic sources" template
@@ -41,54 +42,29 @@ Next we need to update the inventories of these sources
 8. Repeat steps 2-7 selecting the QA Environment in the second box of the template
 9. Repeat steps 2-7 selecting the Prod Environment in the second box of the template
 
-TODO: Encountering errors with the above - verify correct method
+#### 3. Add a new project with the following parameters:
+- **Name:** DEMO Satellite Demo Config
+- **Source Control Type:** GIT
+- **Source Control URL:** https://github.com/benblasco/satellite_demo_config
+- **Branch:** main
+- **Options:** Clean; Update Revision on Launch
 
 
+#### 4. Configure Satellite Remote Execution by creating an AAP job template with the following parameters and then launching it:
+- **Name:** DEMO Satellite Remote Execution
+- **Inventory:** Workshop Inventory
+- **Project:** DEMO Satellite Demo Config
+- **Execution Environment:** auto_satellite workshop execution environment
+- **Playbook:** satellite_config_rex.yml
+- **Credential type:** Satellite_Collection
+- **Credential Name:** Satellite Credential
+- **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
+- *Launch the template*
 
+#### 5. Enable RHEL Remote Execution by creating an AAP job template with the following parameters and then launching it:
+- 
 
-
-
-
-
-
-
-Note: Launch each template once it has been created.
-
-1. Complete all setup tasks for Exercise 0: Setup here:
-[https://aap2.demoredhat.com/exercises/ansible_smart_mgmt/0-setup/](https://aap2.demoredhat.com/exercises/ansible_smart_mgmt/0-setup/)
-
-    - EXCEPTION 1: When running the "Server / RHEL7 Register" template, do not run it as per the instructions above.  Instead,run it 3 times, assigning the hosts to their appropriate environments as follows:
-       - node1 -> Dev
-       - node2 -> QA
-       - node3 -> Prod
-    - EXCEPTION 2: When running the "CONTROLLER / Update inventories via dynamic sources" template, ensure to run it against Dev, QA, and Prod environments
-    - Note: You can skip CentOS-related exercises if not demonstrating convert2rhel
-
-2. Go to Settings -> Job settings and set the following parameters:
-
-    - Enable Role Download: On
-    - Enable Collection(s) Download: On
-    
-3. Create a new project with the following parameters:
-
-    - Name: DEMO Satellite Demo Config
-    - SCM type: GIT
-    - SCM URL: [https://github.com/benblasco/satellite_demo_config](https://github.com/benblasco/satellite_demo_config)
-    - Branch: main
-    - Options: Clean; Update Revision on Launch
-
-4. Configure Satellite Remote Execution by creating a template with the following parameters and then launching it:
-
-    - Name: DEMO Satellite Remote Execution
-    - Inventory: Workshop Inventory
-    - Project: DEMO Satellite Demo Config
-    - Execution Environment: auto_satellite workshop execution environment
-    - Playbook: satellite_config_rex.yml
-    - Credential type: Satellite_Collection
-    - Credential name: Satellite Credential
-    - Privilege escalation: yes (even if possibly redundant as it's in the playbook)
-
-5. Enable RHEL Remote Execution by creating a template with the following parameters and then launching it:
+#### 5. Enable RHEL Remote Execution by creating a template with the following parameters and then launching it:
 
     - Name: DEMO RHEL Remote Execution
     - Inventory: Workshop Inventory
