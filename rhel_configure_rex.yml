@@ -55,10 +55,14 @@
 
 # This is the task causing issues
   - name: Generate SSH keys for rexuser
-    community.crypto.openssh_keypair:
-      path: /home/rexuser/.ssh/id_rsa
-      owner: rexuser
-      group: rexuser
+    ansible.builtin.shell:
+      become:  true
+      become_user: rexuser
+      cmd: ssh-keygen -t ed25519 -N "" -q -f /home/rexuser/.ssh/id_rsa
+    # community.crypto.openssh_keypair:
+    #   path: /home/rexuser/.ssh/id_rsa
+    #   owner: rexuser
+    #   group: rexuser
     tags:
       - ssh
 
