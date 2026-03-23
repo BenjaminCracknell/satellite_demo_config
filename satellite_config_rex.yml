@@ -19,8 +19,8 @@
       name: "{{ item.name }}"
       value: "{{ item.value }}"
     loop:
-      - { name: 'remote_execution_by_default', value: 'true' }
-      - { name: 'errata_status_installable', value: 'true' }
+      - { name: 'remote_execution_by_default', value: true }
+      - { name: 'errata_status_installable', value: true }
       - { name: 'remote_execution_ssh_user', value: 'student' }
     tags:
       - satellite_settings
