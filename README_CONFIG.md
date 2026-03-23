@@ -76,6 +76,8 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
     - Limit: rhel (possibly redundant as it's in the playbook)
     - Privilege escalation: yes (even if possibly redundant as it's in the playbook)
 
+
+##### Try this one
 6. Install RHEL System Roles in Satellite by creating a template with the following parameters and then launching it.  
 
     Note 1: The method below is currently not working because the Satellite server does not use the Red Hat CDN. This can be worked around by manually downloading the `rhel-system-roles` rpm package and installing it directly on the Satellite server.
