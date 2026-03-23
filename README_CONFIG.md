@@ -52,7 +52,7 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
 - **Options:** Clean; Update Revision on Launch
 
 #### 4. Prepare AAP for Remote Execution
-1. Go to AAP > Settings
+1. Go to AAP > Settings > Job Settings
 2. Scroll to the bottom and click 'Edit'
 3. Paste the below into Extra Environment Variables
 ```
@@ -85,6 +85,7 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
 - **Execution Environment:** auto_satellite workshop execution environment
 - **Playbook:** rhel_configure_rex.yml
 - **Credential type:** Machine
+- **Credential Name:** Workshop Credential
 - **Limit:** rhel7 (case sensitive)
 - **Privilege escalation:** yes
 
