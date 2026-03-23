@@ -8,10 +8,9 @@
   vars:
     login: &login
       server_url: "{{ lookup('env', 'SATELLITE_SERVER_URL') }}"
-      username: "{{ lookup('env', 'FOREMAN_USERNAME') }}"
-      password: "{{ lookup('env', 'FOREMAN_PASSWORD') }}"
-#      validate_certs: "{{ lookup('env', 'SATELLITE_VALIDATE_CERTS') }}"
-      validate_certs: false
+      username: "{{ lookup('env', 'SATELLITE_USERNAME') }}"
+      password: "{{ lookup('env', 'SATELLITE_PASSWORD') }}"
+      validate_certs: "{{ lookup('env', 'SATELLITE_VALIDATE_CERTS') }}"
   tasks:
 
   - name: Configure Satellite for Remote Execution
@@ -22,6 +21,6 @@
     loop:
       - { name: 'remote_execution_by_default', value: 'true' }
       - { name: 'errata_status_installable', value: 'true' }
-      - { name: 'remote_execution_ssh_user', value: 'rexuser' }
+      - { name: 'remote_execution_ssh_user', value: 'student' }
     tags:
       - satellite_settings
