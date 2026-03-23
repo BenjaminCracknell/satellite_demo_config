@@ -29,9 +29,3 @@
       - { name: 'remote_execution_ssh_user', value: 'rexuser' }
     tags:
       - satellite_settings
-
-
-
-
-# satellite.7p5tj.sandbox3587.opentlc.com
-# https://satellite.7p5tj.sandbox3587.opentlc.com/new/hosts/satellite.example.com
