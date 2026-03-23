@@ -88,32 +88,33 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
     - Privilege escalation: yes (even if possibly redundant as it's in the playbook)
 ---
 
-##### Try this one
-7. Install RHEL System Roles in Satellite by creating a template with the following parameters and then launching it.  
 
-    Note 1: The method below is currently not working because the Satellite server does not use the Red Hat CDN. This can be worked around by manually downloading the `rhel-system-roles` rpm package and installing it directly on the Satellite server.
+#### 7. Install RHEL System Roles in Satellite by creating a job template with the following parameters and then launching it
+**Note:** This requires a RHEL activation key and organisation ID, both of which can be retrieved from your account via https://console.redhat.com/insights/connector/activation-keys.  It will register the system, install the roles, and then immediately unregister the system. 
 
-    Note 2: This requires a RHEL activation key and organisation ID, both of which can be retrieved from your account via https://console.redhat.com/insights/connector/activation-keys.  It will register the system, install the roles, and then immediately unregister the system.  
+- **Name:** DEMO Satellite Install System Roles
+- **Inventory:** Workshop Inventory
+- **Project:** DEMO Satellite Demo Config
+- **Execution Environment:** auto_satellite workshop execution environment
+- **Playbook:** satellite_install_system_roles.yml
+- **Credentials:**
+    - Credential Type: 
+    - Credential Name: 
+    - Credential Type: 
+    - Credential Name: 
+- **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
+- **Add the following variables:**
+```
+---
+rhn_activation_key: <Activation key>
+rhn_org_id: <Organisation ID>
+```
+- **Save**
+- *Launch the template*
 
-    - Name: DEMO Satellite Install System Roles
-    - Inventory: Workshop Inventory
-    - Project: DEMO Satellite Demo Config
-    - Execution Environment: auto_satellite workshop execution environment
-    - Playbook: satellite_install_system_roles.yml
-    - Credential type: Satellite_Collection
-    - Credential name: Satellite Credential
-    - Credential type: Machine
-    - Credential name: Workshop Credential
-    - Privilege escalation: yes (even if possibly redundant as it's in the playbook)
-    - Add the following variables:
-    ```
-      rhn_activation_key: <Activation key>
-      rhn_org_id: <Organisation ID>
-    ```
-    - Save
 
+*Look into manual steps for step 7*
 
-*Look into manual steps*
 7. (Partially complete) Configure RHEL host groups and collections by creating a template with the following parameters and then launching it:
 
     - Name: DEMO Satellite Configure RHEL hosts
