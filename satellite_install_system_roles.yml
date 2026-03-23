@@ -21,15 +21,6 @@
     tags:
       - subscription-manager
 
-  - name: Check RHSM identity
-    command: subscription-manager identity
-    register: rhsm_identity
-    failed_when: false
-
-  - name: Debug Registration Status
-    debug:
-      msg: "Status details: {{ rhsm_identity.stdout_lines }}"
-
   #- name: Enable a rhel-7-server-extras-rpms repository
   #  community.general.rhsm_repository:
   #    name: rhel-7-server-extras-rpms
@@ -43,18 +34,5 @@
 
   - name: Unregister system
     command: subscription-manager unregister
-
-  # - name: Unregister the systems with subscription-manager
-  #   community.general.redhat_subscription:
-  #     state: absent
-  #   tags:
-  #     - subscription-manager
-
-  - name: Check RHSM identity
-    command: subscription-manager identity
-    register: rhsm_identity
-    failed_when: false
-
-  - name: Debug Registration Status
-    debug:
-      msg: "Status details: {{ rhsm_identity.stdout_lines }}"
+    tags:
+      - subscription-manager
