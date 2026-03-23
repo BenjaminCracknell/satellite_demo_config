@@ -7,7 +7,7 @@
 
   vars:
     login: &login
-      server_url: "{{ lookup('env', 'FOREMAN_SERVER_URL') }}"
+      server_url: "{{ lookup('env', 'SATELLITE_SERVER_URL') }}"
       username: "{{ lookup('env', 'FOREMAN_USERNAME') }}"
       password: "{{ lookup('env', 'FOREMAN_PASSWORD') }}"
 #      validate_certs: "{{ lookup('env', 'SATELLITE_VALIDATE_CERTS') }}"
