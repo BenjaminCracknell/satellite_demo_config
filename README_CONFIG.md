@@ -49,8 +49,19 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
 - **Branch:** main
 - **Options:** Clean; Update Revision on Launch
 
+#### 4. Prepare AAP for Remote Execution
+1. Go to AAP > Settings
+2. Scroll to the bottom and click 'Edit'
+3. Paste the below into Extra Environment Variables
+```
+{
+  "PYTHONWARNINGS": "ignore:Unverified HTTPS request"
+}
+```
 
-#### 4. Configure Satellite Remote Execution by creating an AAP job template with the following parameters and then launching it:
+--- 
+*5 & 6 Potentially redundant*
+#### 5. Configure Satellite Remote Execution by creating an AAP job template with the following parameters and then launching it:
 - **Name:** DEMO Satellite Remote Execution
 - **Inventory:** Workshop Inventory
 - **Project:** DEMO Satellite Demo Config
@@ -61,10 +72,10 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
 - **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
 - *Launch the template*
 
-#### 5. Enable RHEL Remote Execution by creating an AAP job template with the following parameters and then launching it:
+#### 6. Enable RHEL Remote Execution by creating an AAP job template with the following parameters and then launching it:
 - 
 
-#### 5. Enable RHEL Remote Execution by creating a template with the following parameters and then launching it:
+#### 6. Enable RHEL Remote Execution by creating a template with the following parameters and then launching it:
 
     - Name: DEMO RHEL Remote Execution
     - Inventory: Workshop Inventory
@@ -75,10 +86,10 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
     - Credential name: Workshop Credential
     - Limit: rhel (possibly redundant as it's in the playbook)
     - Privilege escalation: yes (even if possibly redundant as it's in the playbook)
-
+---
 
 ##### Try this one
-6. Install RHEL System Roles in Satellite by creating a template with the following parameters and then launching it.  
+7. Install RHEL System Roles in Satellite by creating a template with the following parameters and then launching it.  
 
     Note 1: The method below is currently not working because the Satellite server does not use the Red Hat CDN. This can be worked around by manually downloading the `rhel-system-roles` rpm package and installing it directly on the Satellite server.
 
@@ -101,6 +112,8 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
     ```
     - Save
 
+
+*Look into manual steps*
 7. (Partially complete) Configure RHEL host groups and collections by creating a template with the following parameters and then launching it:
 
     - Name: DEMO Satellite Configure RHEL hosts
