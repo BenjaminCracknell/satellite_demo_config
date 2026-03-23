@@ -45,6 +45,7 @@
       state: absent
     tags:
       - subscription-manager
+    failed_when: false
 
   - name: Check RHSM identity
     command: subscription-manager identity
