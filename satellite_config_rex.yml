@@ -15,7 +15,7 @@
 
   - name: Print the gateway for each host when defined
     ansible.builtin.debug:
-      msg: "Cert {{ validate_certs }}"
+      msg: "Cert {{ login.validate_certs }}"
 
 
   - name: Configure Satellite for Remote Execution
