@@ -53,6 +53,7 @@
     tags:
       - ssh
 
+# This is the task causing issues
   - name: Generate SSH keys for rexuser
     community.crypto.openssh_keypair:
       path: /home/rexuser/.ssh/id_rsa
