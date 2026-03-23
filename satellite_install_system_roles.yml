@@ -40,12 +40,15 @@
       state: present
       disable_plugin: foreman-protector
 
-  - name: Unregister the systems with subscription-manager
-    redhat_subscription:
-      state: absent
-    tags:
-      - subscription-manager
-    failed_when: false
+
+  - name: Unregister system
+    command: subscription-manager unregister
+
+  # - name: Unregister the systems with subscription-manager
+  #   community.general.redhat_subscription:
+  #     state: absent
+  #   tags:
+  #     - subscription-manager
 
   - name: Check RHSM identity
     command: subscription-manager identity
