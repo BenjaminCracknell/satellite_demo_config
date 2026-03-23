@@ -10,7 +10,8 @@
       server_url: "{{ lookup('env', 'FOREMAN_SERVER_URL') }}"
       username: "{{ lookup('env', 'FOREMAN_USERNAME') }}"
       password: "{{ lookup('env', 'FOREMAN_PASSWORD') }}"
-      validate_certs: "{{ lookup('env', 'SATELLITE_VALIDATE_CERTS') }}"
+#      validate_certs: "{{ lookup('env', 'SATELLITE_VALIDATE_CERTS') }}"
+      validate_certs: false
   tasks:
 
   - name: Configure Satellite for Remote Execution
