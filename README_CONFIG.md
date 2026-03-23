@@ -1,6 +1,8 @@
 # Deploying the Environment
 
 [Lab original instructions](https://github.com/ansible/workshops/tree/devel/exercises/rhdp_auto_satellite)
+
+[New Lab Instructions](https://github.com/ansible/workshops/tree/devel/exercises/rhdp_auto_satellite)
 ## RHPDS
 
 1. Log in to the [Red Hat Demo System](https://demo.redhat.com)
@@ -72,23 +74,22 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
 - **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
 - *Launch the template*
 
-#### 6. Enable RHEL Remote Execution by creating an AAP job template with the following parameters and then launching it:
-- 
 
-#### 6. Enable RHEL Remote Execution by creating a template with the following parameters and then launching it:
-
-    - Name: DEMO RHEL Remote Execution
-    - Inventory: Workshop Inventory
-    - Project: DEMO Satellite Demo Config
-    - Execution Environment: auto_satellite workshop execution environment
-    - Playbook: rhel_configure_rex.yml
-    - Credential type: Machine
-    - Credential name: Workshop Credential
-    - Limit: rhel (possibly redundant as it's in the playbook)
-    - Privilege escalation: yes (even if possibly redundant as it's in the playbook)
 ---
+---
+## UP TO Step 6. Encountering errors with running the template - the Generate SSH keys for rexuser task is returning the cannot change locale error
+#### 6. Enable RHEL Remote Execution by creating an AAP job template with the following parameters and then launching it:
+- **Name:** DEMO RHEL Remote Execution
+- **Inventory:** Workshop Inventory
+- **Project:** DEMO Satellite Demo Config
+- **Execution Environment:** auto_satellite workshop execution environment
+- **Playbook:** rhel_configure_rex.yml
+- **Credential type:** Machine
+- **Limit:** rhel7 (case sensitive)
+- **Privilege escalation:** yes
 
 
+---
 #### 7. Install RHEL System Roles in Satellite by creating a job template with the following parameters and then launching it
 **Note:** This requires a RHEL activation key and organisation ID, both of which can be retrieved from your account via https://console.redhat.com/insights/connector/activation-keys.  It will register the system, install the roles, and then immediately unregister the system. 
 
