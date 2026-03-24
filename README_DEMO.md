@@ -72,7 +72,7 @@ Note: Steps 2-4 above are required to update the inventory in AAP Controller in 
 
 ## Demo
 
-1. Go to Content -> Errata
+1. Go to Content -> Content Types -> Errata
 3. Explain Applicable and Installable
 5. Select 100 per page
 6. Click on the "Applicable" checkbox
