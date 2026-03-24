@@ -33,6 +33,8 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
 ![Edit content view assignment](images/edit-content-view-assignment.png)
 6. Do the same for node3 ensuring to select RHEL7_Prod
 
+---
+
 #### 2. Next we need to update the inventories of these sources
 1. Login to the AAP Console
 2. Go to Resources -> Templates
@@ -44,6 +46,8 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
 8. Repeat steps 2-7 selecting the QA Environment in the second box of the template
 9. Repeat steps 2-7 selecting the Prod Environment in the second box of the template
 
+---
+
 #### 3. Add a new project with the following parameters:
 - **Name:** DEMO Satellite Demo Config
 - **Source Control Type:** GIT
@@ -51,18 +55,20 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
 - **Branch:** main
 - **Options:** Clean; Update Revision on Launch
 
+---
+
 #### 4. Prepare AAP for Remote Execution
 1. Go to AAP > Settings > Job Settings
 2. Scroll to the bottom and click 'Edit'
-3. Paste the below into Extra Environment Variables
+3. Paste the below into 'Extra Environment Variables'
 ```
 {
   "PYTHONWARNINGS": "ignore:Unverified HTTPS request"
 }
 ```
 
---- 
-*5 & 6 Potentially redundant*
+---
+
 #### 5. Configure Satellite Remote Execution by creating an AAP job template with the following parameters and then launching it:
 - **Name:** DEMO Satellite Remote Execution
 - **Inventory:** Workshop Inventory
@@ -74,10 +80,8 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
 - **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
 - *Launch the template*
 
+---
 
----
----
-## UP TO Step 6. Encountering errors with running the template - the Generate SSH keys for rexuser task is returning the cannot change locale error
 #### 6. Enable RHEL Remote Execution by creating an AAP job template with the following parameters and then launching it:
 - **Name:** DEMO RHEL Remote Execution
 - **Inventory:** Workshop Inventory
@@ -89,9 +93,9 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
 - **Limit:** rhel7 (case sensitive)
 - **Privilege escalation:** yes
 
-
 ---
-#### 7. Install RHEL System Roles in Satellite by creating a job template with the following parameters and then launching it
+
+#### 7. Install RHEL System Roles in Satellite by creating an AAP job template with the following parameters and then launching it
 **Note:** This requires a RHEL activation key and organisation ID, both of which can be retrieved from your account via https://console.redhat.com/insights/connector/activation-keys.  It will register the system, install the roles, and then immediately unregister the system. 
 
 - **Name:** DEMO Satellite Install System Roles
@@ -100,10 +104,10 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
 - **Execution Environment:** auto_satellite workshop execution environment
 - **Playbook:** satellite_install_system_roles.yml
 - **Credentials:**
-    - Credential Type: 
-    - Credential Name: 
-    - Credential Type: 
-    - Credential Name: 
+    - Credential Type: Machine
+    - Credential Name: Workshop Credential
+    - Credential Type: Satellite_Collection
+    - Credential Name: Satellite Credential
 - **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
 - **Add the following variables:**
 ```
@@ -114,23 +118,46 @@ rhn_org_id: <Organisation ID>
 - **Save**
 - *Launch the template*
 
+---
 
-*Look into manual steps for step 7*
+# Check the Execution Environment here
 
-7. (Partially complete) Configure RHEL host groups and collections by creating a template with the following parameters and then launching it:
+#### 8. Configure RHEL host groups and collections by creating an AAP job template with the following parameters and then launching it
+- **Name:** DEMO Satellite Configure RHEL hosts
+- **Inventory:** Workshop Inventory
+- **Project:** DEMO Satellite Demo Config
+- **Execution Environment:** smart_mgmt workshop execution environment
+- **Playbook:** satellite_config_hosts.yml
+- **Credential Type:** Satellite_Collection
+- **Credential Name:** Satellite Credential
+- **Privilege Escalation:** yes
 
-    - Name: DEMO Satellite Configure RHEL hosts
-    - Inventory: Workshop Inventory
-    - Project: DEMO Satellite Demo Config
-    - Execution Environment: smart_mgmt workshop execution environment
-    - Playbook: satellite_config_hosts.yml
-    - Credential type: Satellite_Collection
-    - Credential name: Satellite Credential
-    - Privilege escalation: yes (even if possibly redundant as it's in the playbook)
+**Note:** You will need to manually add the relevant hosts to the created host groups and host collections, as this has not yet been automated
 
-    Note: You will need to manually add the relevant hosts to the created host groups and host collections, as this has not yet been automated.
+*Look into manual steps for step 8*
 
-8. Continue with any other configuration you want to perform as per the workshop instructions.
+#### 8. Manual Steps
+- In Satellite webui go to Hosts -> Host Collections
+- Create Host Collection
+    - **Name:** All RHEL Hosts Collection
+    - **Save**
+- Select **ALL RHEL Hosts Collection**
+    - Go to Hosts
+    - Click Add
+    - Select nodes 1,2,3
+    - Click Add Selected
+- Go to Configure -> Host Groups
+- Create Host Group
+    - **Name:** All RHEL hosts host group
+    - **Content Source:** 
+    - **Lifecycle Environment:** 
+    - **Content View:** 
+    - 
+
+
+
+#### 9. Continue with any other configurations you want to perform as per the workshop instructions
+
 
 ## Config in Satellite
 
@@ -141,19 +168,51 @@ rhn_org_id: <Organisation ID>
 3. Click the "Synchronise Now" button to pull the latest content.
 
 ### Create new version of the Content View (CV) for each lifecycle environment (LCE)
+1. Go to Content -> Lifecycle -> Content Views
+2. Select RHEL7
+3. Go to Filters
+4. Create Filter
+    - **Name:** Packages without Errata
+    - **Content Type:** RPM
+    - Leave the Include filter checked
+5. Check the slider for *Include all RPMS not associated to any errata*
+![Screenshot of the created filter](images/filter.png)
+6. Go back to the *Filters* page
+7. Create Filter
+    - **Name:** Errata to 31-12-2023
+    - **Content Type:** Errate - by date range
+    - Leave the Include filter checked
+8. On the 'Errata to 31-12-2023 page
+    - Enter an end date of: **12/31/2023**
+    - Save
+9. Publish New Version
+    - Tick **Promote** slider and click **Next**
+    - Select the RHEL7_Prod Lifecycle Environment
+    - Click **Next**
+    - Click **Finish**
+    - *This will take some time*
 
-1. Create a filter of type "RPM" that includes all packages without errata (ie the base versions of the RHEL packages)
-    Note ticking of "include all RPMs with no errata"
-2. Create a filter of type "Errata " to only include errata up to 2023-04-30
-3. Publish the Content View
-    Now you can see what version 2.0 looks like, as it has significantly less packages available and less errata.
-4. Edit and rename the filter to include errata up to 2023-05-30
-5. Publish the Content View
-6. Edit and rename the filter to include errata up to 2023-06-22
-5. Publish the Content View
-6. Promote v2.0 to prod
-7. Promote v3.0 to QA
-8. Promote v4.0 to Dev
+#### Edit the 'Errata to 31-12-2023' filter with the below:
+- Change the name to 'Errata to 31-03-2024'
+- Change the end date to **03/31/2024** and **save**
+
+Publish New Version
+- Tick **Promote** slider and click **Next**
+- Select the RHEL7_QA Lifecycle Environment
+- Click **Next**
+- Click **Finish**
+
+#### Edit the 'Errata to 31-03-2024' filter with the below:
+- Change the name to 'Errata to 30-06-2024'
+- Change the end date to **06/30/2024** and **save**
+
+Publish New Version
+- Tick **Promote** slider and click **Next**
+- Select the RHEL7_Dev Lifecycle Environment
+- Click **Next**
+- Click **Finish**
+
+
 
 ### ~~TO BE RETESTED Register the servers using AAP template:~~
 
