@@ -25,26 +25,26 @@ The RHEL nodes are already created with the configuration:
 We want nodes 1,2,3 to be part of separate Lifecycle Environments. 
 #### 1. Set Node2 to QA, and Node3 to Prod:
 1. Go to Hosts -> All Hosts
-2. Select the three dots on the far right for node2.example.com and select "Change content view environments"
+2. Select the three dots on the far right for **node2.example.com** and select **Change content view environments**
 ![Content-View-Initial-Setup](images/Content-View-Initial-Setup.png)
-3. Select RHEL7_QA
-4. Select the RHEL7 content view
-5. Check the box labelled "Update the host immediately via remote execution"
+3. Select **RHEL7_QA**
+4. Select the **RHEL7** content view
+5. Check the box labelled **Update the host immediately via remote execution**
 ![Edit content view assignment](images/edit-content-view-assignment.png)
-6. Do the same for node3 ensuring to select RHEL7_Prod
+6. Do the same for node3 ensuring to select **RHEL7_Prod**
 
 ---
 
 #### 2. Next we need to update the inventories of these sources
 1. Login to the AAP Console
 2. Go to Resources -> Templates
-3. Select the "CONTROLLER / Update inventories via dynamic sources" template
+3. Select the **CONTROLLER / Update inventories via dynamic sources** template
 4. Launch Job
-5. Select the RHEL7 inventory in the first box
-6. Select the Dev Environment in the second box
+5. Select the **RHEL7** inventory in the first box
+6. Select the **Dev** Environment in the second box
 7. Run the Job
-8. Repeat steps 2-7 selecting the QA Environment in the second box of the template
-9. Repeat steps 2-7 selecting the Prod Environment in the second box of the template
+8. Repeat steps 2-7 selecting the **QA** Environment in the second box of the template
+9. Repeat steps 2-7 selecting the **Prod** Environment in the second box of the template
 
 ---
 
@@ -59,8 +59,8 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments.
 
 #### 4. Prepare AAP for Remote Execution
 1. Go to AAP > Settings > Job Settings
-2. Scroll to the bottom and click 'Edit'
-3. Paste the below into 'Extra Environment Variables'
+2. Scroll to the bottom and click **Edit**
+3. Paste the below into **Extra Environment Variables**
 ```
 {
   "PYTHONWARNINGS": "ignore:Unverified HTTPS request"
@@ -120,9 +120,8 @@ rhn_org_id: <Organisation ID>
 
 ---
 
-# Check the Execution Environment here
-
-#### 8. Configure RHEL host groups and collections by creating an AAP job template with the following parameters and then launching it
+#### ~~8. Configure RHEL host groups and collections by creating an AAP job template with the following parameters and then launching it~~ 
+### Currently not automated -- Move to Step 9 for the manual steps
 - **Name:** DEMO Satellite Configure RHEL hosts
 - **Inventory:** Workshop Inventory
 - **Project:** DEMO Satellite Demo Config
@@ -134,29 +133,33 @@ rhn_org_id: <Organisation ID>
 
 **Note:** You will need to manually add the relevant hosts to the created host groups and host collections, as this has not yet been automated
 
-*Look into manual steps for step 8*
+---
 
-#### 8. Manual Steps
+#### 9. (Manual Steps for Step 8.) Configure Host Collection and Host Group for RHEL Machines
 - In Satellite webui go to Hosts -> Host Collections
 - Create Host Collection
     - **Name:** All RHEL Hosts Collection
     - **Save**
 - Select **ALL RHEL Hosts Collection**
-    - Go to Hosts
-    - Click Add
-    - Select nodes 1,2,3
-    - Click Add Selected
+    1. Go to Hosts
+    2. Click Add
+    3. Select nodes 1,2,3
+    4. Click Add Selected
 - Go to Configure -> Host Groups
 - Create Host Group
     - **Name:** All RHEL hosts host group
-    - **Content Source:** 
-    - **Lifecycle Environment:** 
-    - **Content View:** 
-    - 
+    - **Submit**
+- Add hosts to the group
+    1. Go to Hosts -> All Hosts
+    2. Select all RHEL hosts (nodes 1,2,3)
+    3. Click the 3 dot burger-menu beside the Search Bar -> Change associations -> Host Group
+    ![Screenshot-Select-Hosts-Group](images/hosts-hostgroup.png)
+    4. Select **All RHEL hosts group** from the drop down
+    5. **Save**
+    6. Check that all RHEL hosts belong to the correct group (see Host Group column)
 
 
-
-#### 9. Continue with any other configurations you want to perform as per the workshop instructions
+#### 10. Continue with any other configurations you want to perform as per the workshop instructions
 
 
 ## Config in Satellite
@@ -164,7 +167,7 @@ rhn_org_id: <Organisation ID>
 ### Synchronise the repositories
 
 1. Navigate to Content -> Sync Status -> Red Hat Enterprise Linux Server -> 7Server -> x86_64
-2. Tick "Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server" and "Red Hat Enterprise Linux 7 Server - Extras RPMs x86_64"
+2. Tick **Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server** and **Red Hat Enterprise Linux 7 Server - Extras RPMs x86_64**
 3. Click the "Synchronise Now" button to pull the latest content.
 
 ### Create new version of the Content View (CV) for each lifecycle environment (LCE)
@@ -182,81 +185,37 @@ rhn_org_id: <Organisation ID>
     - **Name:** Errata to 31-12-2023
     - **Content Type:** Errate - by date range
     - Leave the Include filter checked
-8. On the 'Errata to 31-12-2023 page
+8. On the **Errata to 31-12-2023** page
     - Enter an end date of: **12/31/2023**
     - Save
 9. Publish New Version
     - Tick **Promote** slider and click **Next**
-    - Select the RHEL7_Prod Lifecycle Environment
+    - Select the **RHEL7_Prod** Lifecycle Environment
     - Click **Next**
     - Click **Finish**
     - *This will take some time*
 
 #### Edit the 'Errata to 31-12-2023' filter with the below:
-- Change the name to 'Errata to 31-03-2024'
+- Change the name to **Errata to 31-03-2024**
 - Change the end date to **03/31/2024** and **save**
 
 Publish New Version
 - Tick **Promote** slider and click **Next**
-- Select the RHEL7_QA Lifecycle Environment
+- Select the **RHEL7_QA** Lifecycle Environment
 - Click **Next**
 - Click **Finish**
 
 #### Edit the 'Errata to 31-03-2024' filter with the below:
-- Change the name to 'Errata to 30-06-2024'
+- Change the name to **Errata to 30-06-2024**
 - Change the end date to **06/30/2024** and **save**
 
 Publish New Version
 - Tick **Promote** slider and click **Next**
-- Select the RHEL7_Dev Lifecycle Environment
+- Select the **RHEL7_Dev** Lifecycle Environment
 - Click **Next**
 - Click **Finish**
 
 
-
-### ~~TO BE RETESTED Register the servers using AAP template:~~
-
-Next, run the SERVER / RHEL7 - Register job template by clicking the "launch" button to launch.
-
-Node1 -> prod
-Node2 -> dev
-Node1 -> qa
-
-Node1 updates
-Install    1 Package  (+2 Dependent packages)
-Upgrade  116 Packages
-
-Node2 updates
-Install    1 Package  (+2 Dependent packages)
-Upgrade  117 Packages
-
-Node3 updates
-Install    1 Package  (+2 Dependent packages)
-Upgrade  118 Packages
-
-### ~~PARTLY AUTOMATED Create host collection~~
-
-Create a hosts collection called "All RHEL hosts collection" and add all 3 RHEL hosts to it:
-
-1. Hosts -> Host Collections -> Create Host Collection
-2. Name "All RHEL hosts collection"
-3. Save
-4. Go to Hosts tab
-5. Click Add
-6. Add the RHEL hosts only
-
-
-### PARTLY AUTOMATED Create host group
-
-1. Configure -> host groups
-2. Name: "All RHEL hosts group"
-3. Click "Submit" button
-4. Go to Hosts -> All Hosts
-5. Select all RHEL hosts
-6. Click Actions -> Change group
-7. Select "All RHEL hosts group" from the drop down
-8. Click "Submit" button
-9. Go back and check that all RHEL hosts belong to the correct group (see Host Group) column
 
 # Make sure you can show SCAP compliance
 
@@ -266,9 +225,8 @@ Import the foreman-scap-client role as per instructions here
 
 # Fix subscription manifest if it goes stale
 
-Content -> subscriptions
-
-Manifest refresh
+- Content -> subscriptions
+- Manage Manifest -> Refresh
 
 # Pull updates on demand?
 
