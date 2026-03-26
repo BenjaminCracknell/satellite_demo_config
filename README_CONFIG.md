@@ -16,13 +16,15 @@
 9. Note the workbench SSH user, likely to be student, and the workbench password
 10. Note the admin user and matching password too
 
+This deploys an AAP version 2.4, Satellite version 6.18 with 3 RHEL 7.9 hosts
+
 # Prepare Satellite and the RHEL nodes using AAP Controller
 
 The RHEL nodes are already created with the configuration:
 - Nodes 1,2,3 exist on the RHEL7_Dev Life Cycle Environment
 - Nodes 4,5,6 exist on the CENTOS7_Dev Life Cycle Environment
 
-We want nodes 1,2,3 to be part of separate Lifecycle Environments. 
+We want nodes 1,2,3 to be part of separate Lifecycle Environments
 #### 1. Set Node2 to QA, and Node3 to Prod:
 1. Go to Hosts -> All Hosts
 2. Select the three dots on the far right for **node2.example.com** and select **Change content view environments**
