@@ -53,7 +53,7 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments
 #### 3. Add a new project with the following parameters:
 - **Name:** DEMO Satellite Demo Config
 - **Source Control Type:** GIT
-- **Source Control URL:** https://github.com/benblasco/satellite_demo_config
+- **Source Control URL:** https://github.com/benblasco/satellite_demo_config.git    
 - **Branch:** main
 - **Options:** Clean; Update Revision on Launch
 
@@ -185,7 +185,7 @@ rhn_org_id: <Organisation ID>
 6. Go back to the *Filters* page
 7. Create Filter
     - **Name:** Errata to 31-12-2023
-    - **Content Type:** Errate - by date range
+    - **Content Type:** Errata - by date range
     - Leave the Include filter checked
 8. On the **Errata to 31-12-2023** page
     - Enter an end date of: **12/31/2023**
