@@ -5,7 +5,7 @@
 [New Lab Instructions](https://github.com/ansible/workshops/tree/devel/exercises/rhdp_auto_satellite)
 ## RHPDS
 
-1. Log in to the [Red Hat Demo System](https://demo.redhat.com)
+1. Log in to the [Red Hat Demo Platform](https://demo.redhat.com)
 2. In the catalog, search for "Ansible Workshop - Automated Satellite Workshop"
 3. Select Activity "Practice/Enablement" and Purpose "Learning about the product"
 4. Fill out the other values before submitting
@@ -161,8 +161,10 @@ rhn_org_id: <Organisation ID>
     5. **Save**
     6. Check that all RHEL hosts belong to the correct group (see Host Group column)
 
+#### 10. Set up Lightspeed (fka Insights) integration
+- Follow the steps outlined at [Automated Satellite Workshop: Insights Environment Setup](https://github.com/ansible/workshops/blob/devel/exercises/rhdp_auto_satellite/5-setupinsights/README.md) to connect the RHEL hosts to connect hosts to Lightspeed at console.redhat.com
 
-#### 10. Continue with any other configurations you want to perform as per the workshop instructions
+#### 11. Continue with any other configurations you want to perform as per the workshop instructions
 
 
 ## Config in Satellite
