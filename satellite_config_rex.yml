@@ -13,14 +13,19 @@
       validate_certs: "{{ lookup('env', 'SATELLITE_VALIDATE_CERTS') }}"
   tasks:
 
+  - name: Print the gateway for each host when defined
+    ansible.builtin.debug:
+      msg: "Cert {{ login.validate_certs }}"
+
+
   - name: Configure Satellite for Remote Execution
     theforeman.foreman.setting:
       <<: *login
       name: "{{ item.name }}"
       value: "{{ item.value }}"
     loop:
-      - { name: 'remote_execution_by_default', value: 'true' }
-      - { name: 'errata_status_installable', value: 'true' }
+#      - { name: 'remote_execution_by_default', value: 'true' }
+      - { name: 'errata_status_installable', value: 'true'}
       - { name: 'remote_execution_ssh_user', value: 'rexuser' }
     tags:
       - satellite_settings

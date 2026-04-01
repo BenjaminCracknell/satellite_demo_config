@@ -1,13 +1,13 @@
 # Intro
 
 Explain we won’t be talking about provisioning today, but how we can do it on VMWare, public cloud, bare metal of course etc.
-1. Go to hosts -> content hosts and show all the hosts
-2. Go to content -> Lifecycle environments and explain paths, and how hosts are associated with them
-3. Explain the lifecycle environments.  Explain that we have versions for these: dev/qa/prod, but they could have 
+1. Go to Hosts -> Content Hosts and show all the hosts
+2. Go to Content -> Lifecycle -> Lifecycle environments and explain paths, and how hosts are associated with them
+3. Explain the Lifecycle Environments.  Explain that we have versions for these: dev/qa/prod, but they could have 
     a. Database servers
     b. Web servers
     c. etc.
-4. Go to content -> content views.  Show how the software is versioned and promoted through the lifecycle environments
+4. Go to Content -> Lifecycle -> Content Views.  Show how the software is versioned and promoted through the lifecycle environments
 
 # Applying a patch (errata)
 
@@ -72,7 +72,7 @@ Note: Steps 2-4 above are required to update the inventory in AAP Controller in 
 
 ## Demo
 
-1. Go to Content -> Errata
+1. Go to Content -> Content Types -> Errata
 3. Explain Applicable and Installable
 5. Select 100 per page
 6. Click on the "Applicable" checkbox

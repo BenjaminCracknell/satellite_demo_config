@@ -7,28 +7,28 @@
 
   tasks:
 
-  - name: Katello actions on RHEL hosts
-    block:
-    - name: Install katello packages
-      yum:
-        name: "{{ item }}"
-        state: latest
-      loop:
-        - katello-host-tools.noarch
-        - katello-host-tools-tracer.noarch
-        - katello-host-tools-fact-plugin.noarch
-      tags:
-        - yum
+  # - name: Katello actions on RHEL hosts
+  #   block:
+  #   - name: Install katello packages
+  #     yum:
+  #       name: "{{ item }}"
+  #       state: latest
+  #     loop:
+  #       - katello-host-tools.noarch
+  #       - katello-host-tools-tracer.noarch
+  #       - katello-host-tools-fact-plugin.noarch
+  #     tags:
+  #       - yum
 
-    - name: Run some katello commands
-      shell:
-        cmd: "{{ item }}"
-      loop:
-        - katello-package-upload
-        - katello-enabled-repos-upload
-      tags:
-        - katello
-    when: ansible_facts['distribution'] == 'RedHat'
+  #   - name: Run some katello commands
+  #     shell:
+  #       cmd: "{{ item }}"
+  #     loop:
+  #       - katello-package-upload
+  #       - katello-enabled-repos-upload
+  #     tags:
+  #       - katello
+  #   when: ansible_facts['distribution'] == 'RedHat'
 
   - name: Create the user rexuser
     user:
@@ -54,10 +54,10 @@
       - ssh
 
   - name: Generate SSH keys for rexuser
-    community.crypto.openssh_keypair:
-      path: /home/rexuser/.ssh/id_rsa
-      owner: rexuser
-      group: rexuser
+    ansible.builtin.shell:
+      cmd: ssh-keygen -t ed25519 -N "" -q -f /home/rexuser/.ssh/id_rsa
+    become:  true
+    become_user: rexuser
     tags:
       - ssh
 

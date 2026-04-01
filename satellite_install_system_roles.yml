@@ -26,13 +26,13 @@
   #    name: rhel-7-server-extras-rpms
 
   - name: Install the rhel-system-roles package
-    yum:
+    dnf:
       name: rhel-system-roles
       state: present
       disable_plugin: foreman-protector
 
-  - name: Unregister the systems with subscription-manager
-    redhat_subscription:
-      state: absent
+
+  - name: Unregister system
+    command: subscription-manager unregister
     tags:
       - subscription-manager
