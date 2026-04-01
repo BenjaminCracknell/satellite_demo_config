@@ -94,6 +94,7 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments
 - **Credential Name:** Workshop Credential
 - **Limit:** rhel7 (case sensitive)
 - **Privilege escalation:** yes
+- *Launch the template*
 
 ---
 
