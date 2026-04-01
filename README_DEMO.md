@@ -89,8 +89,8 @@ Execution steps:
 5. Click Ansible roles
 6. Add rhel-system-roles.timesync if not already added
 7. Submit, and explain that now we need to check the configuration
-8. Click on the "Variables" button under the actions for the role
-9. Click on the timesync_ntp_provider parameter. 
+8. Click on Configure -> Ansible -> Roles and find the "rhel-system-roles.timesync" role. 
+9. Click the "Variables" button, and then the timesync_ntp_provider parameter. 
 10. Click the "Override" check box, and paste the line below exactly as is into the "Default Value"  
 `chrony`  
 11. Click "Submit".  You will now see that the value has a flag next to it to tell us that it has been overridden.
@@ -117,7 +117,7 @@ chronyc sources
 ```
 21. Summarise how you have applied a configuration at scale across a group of hosts
 
-# Show SCAP compliance
+# Show SCAP compliance locally
 
 1. Go to Hosts -> Policies
 2. Click on Dashboard
