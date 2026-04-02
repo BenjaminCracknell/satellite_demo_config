@@ -15,36 +15,6 @@ Explain we won’t be talking about provisioning today, but how we can do it on 
 
 Note 1: This is based on the knowledge shared in this comment within a KB article [https://access.redhat.com/discussions/2913231#comment-1148661](https://access.redhat.com/discussions/2913231#comment-1148661).  Please make it a priority to read this article before proceeding.  
 
-### Publish the Content Views
-
-Note: Steps below are carried out in Satellite.
-
-1. Go to Content -> Content Views
-2. Select the RHEL7 CV
-3. Click "Yum Content" -> "Repositories" and note the repos that are included in the CV
-4. Click "Yum Content" -> "Filters"
-5. Click the "New Filter" button and enter the following parameters:
-    - Name: Base packages with no errata
-    - Content Type: Package
-    - Inclusion type: Include
-6. Click Create Filter
-7. Check the "Include all RPMs with no errata" slider. It will turn from grey to blue
-8. Click "Yum Content" -> "Filters"
-9. Click the "New Filter" button and enter the following parameters:
-    - Name: Errata to 2024-02-28
-    - Content Type: Errata - by date range
-    - Inclusion type: Include filter
-10. Click Create Filter
-11. Leave all the "Errata Type" boxes ticked (Security, Enhancement, Bugfix)
-12. Select Date Type "Updated On"
-13. Set the End Date to 2024-02-28
-14. Click Edit Rule to save the changes
-15. Click "Publish New Version"
-16. Wait for the CV to publish.  It will take ~20 minutes. Be Patient!
-17. Edit the Errata filter, change the end date to 2024-04-30, and publish again
-18. Edit the Errata filter, change the end date to 2024-07-31, and publish again
-19. You will then have multiple versions of the CV, and each newer version should contain more errata than the previous version.
-
 ### Promote the content views
 
 Note: Steps below are carried out in Satellite.
