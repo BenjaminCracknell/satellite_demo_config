@@ -17,9 +17,9 @@ Note 1: This is based on the knowledge shared in this comment within a KB articl
 
 ### Promote the content views
 
-Note: Steps below are carried out in Satellite.
+Note: This is undertaken in the config readme. You could prepare the Content View versions and not promote them in the config to complete the below during the demo
 
-1. Go back to Content Views -> RHEL 7
+1. Go back to Content -> Lifecycle -> Content Views -> RHEL 7
 2. Click "Versions"
 3. Promote the versions as follows:
     - Most recent version (N) to RHEL7_Dev
@@ -31,14 +31,15 @@ Note: Steps below are carried out in Satellite.
 Note: Steps below are carried out in AAP Automation Controller
 
 1. Move the hosts into different lifecycle environments using the "Server / RHEL 7 - Register" template:
-    - node1 to "Prod"
+    - node1 stays in "Dev" (ie. do nothing)
     - node2 to "QA"
-    - node3 stays in "Dev" (ie. do nothing)
-2. Run the "EC2 / Set instance tags based on Satellite facts" template
-3. Run the "EC2 / Set instance tag - RHEL" template
-4. Run the "CONTROLLER / Update inventories via dynamic sources" template for each environment: Dev, QA, Prod
+    - node3 to "Prod"
+2. Run Job Templates:
+    1. **EC2 / Set instance tags based on Satellite facts**
+    2. **EC2 / Set instance tag - RHEL**
+    3. **CONTROLLER / Update inventories via dynamic sources** template for RHEL7 Inventory, and for each environment: Dev, QA, Prod
 
-Note: Steps 2-4 above are required to update the inventory in AAP Controller in case that is used elsewhere.
+Note: Step 2 above is required to update the inventory in AAP Controller in case that is used elsewhere.
 
 ## Demo
 
