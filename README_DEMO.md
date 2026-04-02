@@ -107,7 +107,7 @@ Execution steps:
 5. Click Ansible roles
 6. Add rhel-system-roles.timesync if not already added
 7. Submit, and explain that now we need to check the configuration
-8. Go to Ansible -> Roles -> Find the rhel-system-roles.timesync, and click the variables button
+8. Go to Configure -> Ansible -> Roles -> Find the rhel-system-roles.timesync, and click the variables button
 9. Click on the timesync_ntp_provider parameter. 
 10. Click the "Override" check box, and paste the line below exactly as is into the "Default Value"  
 `chrony`  
