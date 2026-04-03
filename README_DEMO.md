@@ -11,82 +11,35 @@ Explain we won’t be talking about provisioning today, but how we can do it on 
 
 # Applying a patch (errata)
 
-## Setup (manual)
-
-Note 1: This is based on the knowledge shared in this comment within a KB article [https://access.redhat.com/discussions/2913231#comment-1148661](https://access.redhat.com/discussions/2913231#comment-1148661).  Please make it a priority to read this article before proceeding.  
-
-### Publish the Content Views
-
-Note: Steps below are carried out in Satellite.
-
-1. Go to Content -> Content Views
-2. Select the RHEL7 CV
-3. Click "Yum Content" -> "Repositories" and note the repos that are included in the CV
-4. Click "Yum Content" -> "Filters"
-5. Click the "New Filter" button and enter the following parameters:
-    - Name: Base packages with no errata
-    - Content Type: Package
-    - Inclusion type: Include
-6. Click Create Filter
-7. Check the "Include all RPMs with no errata" slider. It will turn from grey to blue
-8. Click "Yum Content" -> "Filters"
-9. Click the "New Filter" button and enter the following parameters:
-    - Name: Errata to 2024-02-28
-    - Content Type: Errata - by date range
-    - Inclusion type: Include filter
-10. Click Create Filter
-11. Leave all the "Errata Type" boxes ticked (Security, Enhancement, Bugfix)
-12. Select Date Type "Updated On"
-13. Set the End Date to 2024-02-28
-14. Click Edit Rule to save the changes
-15. Click "Publish New Version"
-16. Wait for the CV to publish.  It will take ~20 minutes. Be Patient!
-17. Edit the Errata filter, change the end date to 2024-04-30, and publish again
-18. Edit the Errata filter, change the end date to 2024-07-31, and publish again
-19. You will then have multiple versions of the CV, and each newer version should contain more errata than the previous version.
-
-### Promote the content views
-
-Note: Steps below are carried out in Satellite.
-
-1. Go back to Content Views -> RHEL 7
-2. Click "Versions"
-3. Promote the versions as follows:
-    - Most recent version (N) to RHEL7_Dev
-    - Next most recent version (N-1) to RHEL7_QA
-    - Next most recent version (N-2) to RHEL7_Prod
-
-### Move your hosts to the correct Lifecycle Environments
-
-Note: Steps below are carried out in AAP Automation Controller
-
-1. Move the hosts into different lifecycle environments using the "Server / RHEL 7 - Register" template:
-    - node1 to "Prod"
-    - node2 to "QA"
-    - node3 stays in "Dev" (ie. do nothing)
-2. Run the "EC2 / Set instance tags based on Satellite facts" template
-3. Run the "EC2 / Set instance tag - RHEL" template
-4. Run the "CONTROLLER / Update inventories via dynamic sources" template for each environment: Dev, QA, Prod
-
-Note: Steps 2-4 above are required to update the inventory in AAP Controller in case that is used elsewhere.
-
 ## Demo
 
 1. Go to Content -> Content Types -> Errata
+2. Filter on RHEL 7 server RPMs
 3. Explain Applicable and Installable
 5. Select 100 per page
 6. Click on the "Applicable" checkbox
-7. Find the first installable errata for all 3 hosts: RHBA-2024:0856 subscription-manager bug fix update 
-8. Note the date is Feb 19 2024, before the first filter end date created
+7. Find an installable erratum for all 3 hosts: e.g. RHSA-2023:7743 Low: curl security update
+8. Note the date is 2023-12-12, before the first filter end date created
 9. Click the Apply Errata button to install it and fix the issues on all impacted hosts
-10. Note that it uses Ansible
 11. Click and show the log for one of the hosts
 
-Optional tasks:
+## Optional task: Install an emergency update by creating incremental content views
 
-1. Go back to the Errata view, click the applicable checkbox, and select  RHSA-2024:3669 Important: less security update 
-2. Run it and fix the issues on just the one host
-3. Go to content views to explain why the content is not installable on the Prod and QA hosts
+1. Go back to the Errata view, click the installable checkbox, and select the erratum RHSA-2024:2004 Important: kernel security and bug fix update
+2. Click the "Apply Erratum" button
+2. Note that it is currently applicable to all 3 hosts, but only installable on 1 host. You can see this by ticking the box to "Only show content hosts where the errata is currently installable in the host's Lifecycle Environment".
+3. Untick that box
+4. Click Next, and you will be asked to create an incremental CV for RHEL7_QA and RHEL7_Prod
+5. Tick the " Apply Errata to Content Hosts immediately after publishing" and then click "Confirm".
+6. Updating the CVs and installing the erratum takes around 10 minutes, so you can move to the next demo and check the task via Monitor -> Jobs later if asked.
+
+
+## Optional task: Install an erratum that is just applicable to one host
+
+1. Go back to the Errata view, click the installable checkbox, and select  	RHSA-2024:2004 	Important: kernel security and bug fix update 	Security Advisory - Important
+2. Click the Apply Erratum button and select the host on which the erratum is installable (ie the one in the RHEL7_Dev LCE)
+3. Note that you can click the check box "Only show content hosts where the errata is currently installable in the host's Lifecycle Environment."
+4. Go to content views to explain why the content is not installable on the Prod and QA hosts
 
 # Installing/Updating a package
 
@@ -102,7 +55,7 @@ Optional tasks:
 # Check if a reboot is required
 
 1. Go to Hosts -> All Hosts
-2. Add filter `trace_status=reboot_needed` via the search box, and press "Search".
+2. Add filter `trace_status=reboot_needed` via the search box, and press "Search". If no results come up then no systems need a reboot.
 
 Refer to [https://access.redhat.com/discussions/3175851](https://access.redhat.com/discussions/3175851)
 
@@ -136,8 +89,8 @@ Execution steps:
 5. Click Ansible roles
 6. Add rhel-system-roles.timesync if not already added
 7. Submit, and explain that now we need to check the configuration
-8. Click on the "Variables" button under the actions for the role
-9. Click on the timesync_ntp_provider parameter. 
+8. Click on Configure -> Ansible -> Roles and find the "rhel-system-roles.timesync" role. 
+9. Click the "Variables" button, and then the timesync_ntp_provider parameter. 
 10. Click the "Override" check box, and paste the line below exactly as is into the "Default Value"  
 `chrony`  
 11. Click "Submit".  You will now see that the value has a flag next to it to tell us that it has been overridden.
@@ -164,7 +117,7 @@ chronyc sources
 ```
 21. Summarise how you have applied a configuration at scale across a group of hosts
 
-# Show SCAP compliance
+# Show SCAP compliance locally
 
 1. Go to Hosts -> Policies
 2. Click on Dashboard

@@ -5,7 +5,7 @@
 [New Lab Instructions](https://github.com/ansible/workshops/tree/devel/exercises/rhdp_auto_satellite)
 ## RHPDS
 
-1. Log in to the [Red Hat Demo System](https://demo.redhat.com)
+1. Log in to the [Red Hat Demo Platform](https://demo.redhat.com)
 2. In the catalog, search for "Ansible Workshop - Automated Satellite Workshop"
 3. Select Activity "Practice/Enablement" and Purpose "Learning about the product"
 4. Fill out the other values before submitting
@@ -161,8 +161,10 @@ rhn_org_id: <Organisation ID>
     5. **Save**
     6. Check that all RHEL hosts belong to the correct group (see Host Group column)
 
+#### 10. Set up Lightspeed (fka Insights) integration
+- Follow the steps outlined at [Automated Satellite Workshop: Insights Environment Setup](https://github.com/ansible/workshops/blob/devel/exercises/rhdp_auto_satellite/5-setupinsights/README.md) to connect the RHEL hosts to connect hosts to Lightspeed at console.redhat.com
 
-#### 10. Continue with any other configurations you want to perform as per the workshop instructions
+#### 11. Continue with any other configurations you want to perform as per the workshop instructions
 
 
 ## Config in Satellite
@@ -173,7 +175,10 @@ rhn_org_id: <Organisation ID>
 2. Tick **Red Hat Enterprise Linux 7 Server RPMs x86_64 7Server** and **Red Hat Enterprise Linux 7 Server - Extras RPMs x86_64**
 3. Click the "Synchronise Now" button to pull the latest content.
 
-### Create new version of the Content View (CV) for each lifecycle environment (LCE)
+### Create a new version of the Content View (CV) for each lifecycle environment (LCE)
+
+Note: This is based on the knowledge shared in this comment within a KB article [https://access.redhat.com/discussions/2913231#comment-1148661](https://access.redhat.com/discussions/2913231#comment-1148661).  Please make it a priority to read this article before proceeding.  
+
 1. Go to Content -> Lifecycle -> Content Views
 2. Select RHEL7
 3. Go to Filters
@@ -196,7 +201,7 @@ rhn_org_id: <Organisation ID>
     - Select the **RHEL7_Prod** Lifecycle Environment
     - Click **Next**
     - Click **Finish**
-    - *This will take some time*
+    - *This will take some time*, perhaps 10 minutes or more.
 
 #### Edit the 'Errata to 31-12-2023' filter with the below:
 - Change the name to **Errata to 31-03-2024**
@@ -218,7 +223,7 @@ Publish New Version
 - Click **Next**
 - Click **Finish**
 
-
+The final result: you will then have multiple versions of the CV, and each newer version should contain more errata than the previous version.
 
 # Make sure you can show SCAP compliance
 
