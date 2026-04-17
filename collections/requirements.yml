@@ -3,3 +3,9 @@ collections:
     version: 4.8.2
   - theforeman.foreman
   - community.crypto
+  - name: ansible.platform
+  - name: ansible.hub
+  - name: ansible.controller
+    version: ">=4.6.0"
+  - name: ansible.eda
+  - name: infra.aap_configuration
