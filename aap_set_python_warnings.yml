@@ -4,8 +4,9 @@
 
   vars:
     controller_settings:
-      AWX_TASK_ENV:
-        PYTHONWARNINGS: "ignore:Unverified HTTPS request"
+      - setting: AWX_TASK_ENV
+        value:
+          PYTHONWARNINGS: "ignore:Unverified HTTPS request"
  #       value: '"PYTHONWARNINGS": "ignore:Unverified HTTPS request"'
 
   roles:
