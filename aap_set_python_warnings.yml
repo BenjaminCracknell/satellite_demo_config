@@ -4,8 +4,9 @@
 
   vars:
     controller_settings:
-      - name: "PYTHONWARNINGS"
-        value: "ignore:Unverified HTTPS request"
+      AWX_TASK_ENV:
+        PYTHONWARNINGS: "ignore:Unverified HTTPS request"
+ #       value: '"PYTHONWARNINGS": "ignore:Unverified HTTPS request"'
 
   roles:
     - role: infra.controller_configuration.settings
