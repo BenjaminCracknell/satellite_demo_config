@@ -32,9 +32,9 @@
   hosts: node2.example.com, node3.example.com
   become: true
   tasks:
-    - name: Subscription-manager | update to new Environment
-      command: subscription-manager Refresh
-      registerr: refresh_out
+    - name: Subscription-manager - update to new Environment
+      command: subscription-manager refresh
+      register: refresh_out
       changed_when: "'All local data refresh' in refresh_out.stdout"
 
     - name: Clean yum cache to prevent metadata conflicts
