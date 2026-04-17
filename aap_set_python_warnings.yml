@@ -1,0 +1,11 @@
+---
+- name: Add the extra environment variable PYTHONWARNINGS to AAP controller
+  hosts: localhost
+
+  vars:
+    controller_settings:
+      - name: "PYTHONWARNINGS"
+        value: "ignore:Unverified HTTPS request"
+
+  roles:
+    - {role: infra.aap_configuration.controller_settings, when: controller_settings is defined}
