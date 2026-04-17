@@ -3,8 +3,7 @@ collections:
     version: 4.8.2
   - theforeman.foreman
   - community.crypto
-  - ansible.hub
-  - name: ansible.controller
-    version: ">=4.6.0"
+  - infra.ah_configuration
+  - awx.awx
   - name: ansible.eda
-  - name: infra.aap_configuration
+  - name: infra.controller_configuration
