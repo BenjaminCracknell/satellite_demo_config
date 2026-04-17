@@ -8,5 +8,5 @@
         value: "ignore:Unverified HTTPS request"
 
   roles:
-    - role: infra.controller_configuration.controller_settings
+    - role: infra.controller_configuration.settings
       when: controller_settings is defined
