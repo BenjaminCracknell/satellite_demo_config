@@ -2,6 +2,9 @@
 - name: Add the extra environment variable PYTHONWARNINGS to AAP controller
   hosts: localhost
 
+  vars_files:
+    - vars/main.yml
+
   roles:
     - role: infra.controller_configuration.settings
       when: controller_settings is defined
