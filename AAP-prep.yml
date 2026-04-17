@@ -1,0 +1,41 @@
+---
+- name: Prepare hosts in AAP
+  hosts: localhost
+  gather_facts: false
+
+  vars:
+    satellite_user: "student"
+    org_name: "Default_Organization"
+  
+    host_updates:
+      - name: "node2.example.com"
+        cv: "RHEL7"
+        env: "RHEL7_QA"
+      - name: "node3.example.com"
+        cv: "RHEL7"
+        env: "RHEL7_PROD"
+
+  tasks:
+    - name: Update Content View and Lifecycle Environment per host
+      redhat.satellite.host:
+        validate_certs: true
+        name: "{{ item.name }}"
+        organization: "{{ org_name }}"
+        content_view: "{{ item.cv }}"
+        lifecycle_environment: "{{ item.env }}"
+        state: present
+      loop: "{{ host_updates }}"
+      loop_control:
+        label: "Updating {{ item.name }} to {{ item.env }}"
+
+- name: Refresh Managed Nodes
+  hosts: node2.example.com, node3.example.com
+  become: true
+  tasks:
+    - name: Subscription-manager | update to new Environment
+      command: subscription-manager Refresh
+      registerr: refresh_out
+      changed_when: "'All local data refresh' in refresh_out.stdout"
+
+    - name: Clean yum cache to prevent metadata conflicts
+      command: yum clean all
