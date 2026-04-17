@@ -8,4 +8,4 @@
         value: "ignore:Unverified HTTPS request"
 
   roles:
-    - {role: infra.aap_configuration.controller_settings, when: controller_settings is defined}
+    - {role: infra.controller_configuration.controller_settings, when: controller_settings is defined}
