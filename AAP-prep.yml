@@ -5,7 +5,7 @@
 
   vars:
     satellite_user: "student"
-    org_name: "Default_Organization"
+    org_name: "Default Organization"
   
     host_updates:
       - name: "node2.example.com"
