@@ -24,7 +24,97 @@ The RHEL nodes are already created with the configuration:
 - Nodes 1,2,3 exist on the RHEL7_Dev Life Cycle Environment
 - Nodes 4,5,6 exist on the CENTOS7_Dev Life Cycle Environment
 
+### Configure Automation
+#### 1. Add a new project with the following parameters:
+- **Name:** DEMO Satellite Demo Config
+- **Source Control Type:** GIT
+- **Source Control URL:** https://github.com/benblasco/satellite_demo_config.git    
+- **Branch:** main
+- **Options:** Clean; Update Revision on Launch
+
+---
+
+#### 2. Prepare AAP for Remote Execution
+1. Go to AAP > Settings > Job Settings
+2. Scroll to the bottom and click **Edit**
+3. Paste the below into **Extra Environment Variables**
+```
+{
+  "PYTHONWARNINGS": "ignore:Unverified HTTPS request"
+}
+```
+
+---
+
+#### 3. Configure Satellite Remote Execution by creating an AAP job template with the following parameters and then launching it:
+- **Name:** DEMO Satellite Remote Execution
+- **Inventory:** Workshop Inventory
+- **Project:** DEMO Satellite Demo Config
+- **Execution Environment:** auto_satellite workshop execution environment
+- **Playbook:** satellite_config_rex.yml
+- **Credential type:** Satellite_Collection
+- **Credential Name:** Satellite Credential
+- **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
+- *Launch the template*
+
+---
+
+#### 4. Enable RHEL Remote Execution by creating an AAP job template with the following parameters and then launching it:
+- **Name:** DEMO RHEL Remote Execution
+- **Inventory:** Workshop Inventory
+- **Project:** DEMO Satellite Demo Config
+- **Execution Environment:** auto_satellite workshop execution environment
+- **Playbook:** rhel_configure_rex.yml
+- **Credential type:** Machine
+- **Credential Name:** Workshop Credential
+- **Limit:** rhel7 (case sensitive)
+- **Privilege escalation:** yes
+- *Launch the template*
+
+---
+
+#### 5. Install RHEL System Roles in Satellite by creating an AAP job template with the following parameters and then launching it
+**Note:** This requires a RHEL activation key and organisation ID, both of which can be retrieved from your account via https://console.redhat.com/insights/connector/activation-keys.  It will register the system, install the roles, and then immediately unregister the system. 
+
+- **Name:** DEMO Satellite Install System Roles
+- **Inventory:** Workshop Inventory
+- **Project:** DEMO Satellite Demo Config
+- **Execution Environment:** auto_satellite workshop execution environment
+- **Playbook:** satellite_install_system_roles.yml
+- **Credentials:**
+    - Credential Type: Machine
+    - Credential Name: Workshop Credential
+    - Credential Type: Satellite_Collection
+    - Credential Name: Satellite Credential
+- **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
+- **Add the following variables:**
+```
+---
+rhn_activation_key: <Activation key>
+rhn_org_id: <Organisation ID>
+```
+- **Save**
+- *Launch the template*
+
+
+### Configure Environment
 We want nodes 1,2,3 to be part of separate Lifecycle Environments
+** WIP -- Automation step 1. Set Node2 to QA, and Node3 to Prod:
+#### 1. In AAP create a Job Template with the following paramaters and then launch it
+- **Name:** DEMO Satellite Prepare Lifecycle Environments
+- **Inventory:** Workshop Inventory
+- **Project:** DEMO Satellite Demo Config
+- **Execution Environment:** auto_satellite workshop execution environment
+- **Playbook:** AAP-prep.yml
+- **Credentials:**
+    - Credential Type: Machine
+    - Credential Name: Workshop Credential
+    - Credential Type: Satellite_Collection
+    - Credential Name: Satellite Credential
+- **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
+- **Save**
+- *Launch the template*
+
 #### 1. Set Node2 to QA, and Node3 to Prod:
 1. Go to Hosts -> All Hosts
 2. Select the three dots on the far right for **node2.example.com** and select **Change content view environments**
