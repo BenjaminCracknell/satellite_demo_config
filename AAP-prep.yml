@@ -16,6 +16,11 @@
         env: "RHEL7_Prod"
 
   tasks:
+    - name: Debug loop variables
+      debug:
+        msg: "Targeting {{ item.name }} with CV {{ item.cv }} and Env {{ item.env }}"
+      loop: "{{ host_updates }}"
+
     - name: Update Content View and Lifecycle Environment per host
       redhat.satellite.host:
         validate_certs: true
