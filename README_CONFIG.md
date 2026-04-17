@@ -24,7 +24,51 @@ The RHEL nodes are already created with the configuration:
 - Nodes 1,2,3 exist on the RHEL7_Dev Life Cycle Environment
 - Nodes 4,5,6 exist on the CENTOS7_Dev Life Cycle Environment
 
-### Configure Automation
+### Configure Environment
+We want nodes 1,2,3 to be part of separate Lifecycle Environments
+<!--
+Not Currently Working -- Automation step 1. Set Node2 to QA, and Node3 to Prod:
+#### 1. In AAP create a Job Template with the following paramaters and then launch it
+ - **Name:** DEMO Satellite Prepare Lifecycle Environments
+- **Inventory:** Workshop Inventory
+- **Project:** DEMO Satellite Demo Config
+- **Execution Environment:** auto_satellite workshop execution environment
+- **Playbook:** AAP-prep.yml
+- **Credentials:**
+    - Credential Type: Machine
+    - Credential Name: Workshop Credential
+    - Credential Type: Satellite_Collection
+    - Credential Name: Satellite Credential
+- **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
+- **Save**
+- *Launch the template* -->
+
+#### 1. Set Node2 to QA, and Node3 to Prod:
+1. Go to Hosts -> All Hosts
+2. Select the three dots on the far right for **node2.example.com** and select **Change content view environments**
+![Content-View-Initial-Setup](images/Content-View-Initial-Setup.png)
+3. Select **RHEL7_QA**
+4. Select the **RHEL7** content view
+5. Check the box labelled **Update the host immediately via remote execution**
+![Edit content view assignment](images/edit-content-view-assignment.png)
+6. Do the same for node3 ensuring to select **RHEL7_Prod**
+
+---
+
+#### 2. Next we need to update the inventories of these sources
+1. Login to the AAP Console
+2. Go to Resources -> Templates
+3. Select the **CONTROLLER / Update inventories via dynamic sources** template
+4. Launch Job
+5. Select the **RHEL7** inventory in the first box
+6. Select the **Dev** Environment in the second box
+7. Run the Job
+8. Repeat steps 2-7 selecting the **QA** Environment in the second box of the template
+9. Repeat steps 2-7 selecting the **Prod** Environment in the second box of the template
+
+---
+
+### Configure Environment with Automation
 #### 1. Add a new project with the following parameters:
 - **Name:** DEMO Satellite Demo Config
 - **Source Control Type:** GIT
@@ -34,15 +78,19 @@ The RHEL nodes are already created with the configuration:
 
 ---
 
-#### 2. Prepare AAP for Remote Execution
-1. Go to AAP > Settings > Job Settings
-2. Scroll to the bottom and click **Edit**
-3. Paste the below into **Extra Environment Variables**
-```
-{
-  "PYTHONWARNINGS": "ignore:Unverified HTTPS request"
-}
-```
+#### 2. Prepare AAP for remote execution by creating an AAP job template with the following parameters and then launching it:
+- **Name:** DEMO Set PythonWarnings
+- **Inventory:** Workshop Inventory
+- **Project:** DEMO Satellite Demo Config
+- **Execution Environment:** Default execution environment
+- **Playbook:** aap_set_python_warnings.yml
+- **Credentials:**
+    - **Credential type:** Red Hat Ansible Automation Platform
+    - **Credential Name:** Controller Credential
+    - **Credential type:** Machine
+    - **Credential Name:** Workshop Credential
+- **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
+- *Launch the template*
 
 ---
 
@@ -96,125 +144,10 @@ rhn_org_id: <Organisation ID>
 - **Save**
 - *Launch the template*
 
-
-### Configure Environment
-We want nodes 1,2,3 to be part of separate Lifecycle Environments
-** WIP -- Automation step 1. Set Node2 to QA, and Node3 to Prod:
-#### 1. In AAP create a Job Template with the following paramaters and then launch it
-- **Name:** DEMO Satellite Prepare Lifecycle Environments
-- **Inventory:** Workshop Inventory
-- **Project:** DEMO Satellite Demo Config
-- **Execution Environment:** auto_satellite workshop execution environment
-- **Playbook:** AAP-prep.yml
-- **Credentials:**
-    - Credential Type: Machine
-    - Credential Name: Workshop Credential
-    - Credential Type: Satellite_Collection
-    - Credential Name: Satellite Credential
-- **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
-- **Save**
-- *Launch the template*
-
-#### 1. Set Node2 to QA, and Node3 to Prod:
-1. Go to Hosts -> All Hosts
-2. Select the three dots on the far right for **node2.example.com** and select **Change content view environments**
-![Content-View-Initial-Setup](images/Content-View-Initial-Setup.png)
-3. Select **RHEL7_QA**
-4. Select the **RHEL7** content view
-5. Check the box labelled **Update the host immediately via remote execution**
-![Edit content view assignment](images/edit-content-view-assignment.png)
-6. Do the same for node3 ensuring to select **RHEL7_Prod**
-
 ---
 
-#### 2. Next we need to update the inventories of these sources
-1. Login to the AAP Console
-2. Go to Resources -> Templates
-3. Select the **CONTROLLER / Update inventories via dynamic sources** template
-4. Launch Job
-5. Select the **RHEL7** inventory in the first box
-6. Select the **Dev** Environment in the second box
-7. Run the Job
-8. Repeat steps 2-7 selecting the **QA** Environment in the second box of the template
-9. Repeat steps 2-7 selecting the **Prod** Environment in the second box of the template
-
----
-
-#### 3. Add a new project with the following parameters:
-- **Name:** DEMO Satellite Demo Config
-- **Source Control Type:** GIT
-- **Source Control URL:** https://github.com/benblasco/satellite_demo_config.git    
-- **Branch:** main
-- **Options:** Clean; Update Revision on Launch
-
----
-
-#### 4. Prepare AAP for Remote Execution
-1. Go to AAP > Settings > Job Settings
-2. Scroll to the bottom and click **Edit**
-3. Paste the below into **Extra Environment Variables**
-```
-{
-  "PYTHONWARNINGS": "ignore:Unverified HTTPS request"
-}
-```
-
----
-
-#### 5. Configure Satellite Remote Execution by creating an AAP job template with the following parameters and then launching it:
-- **Name:** DEMO Satellite Remote Execution
-- **Inventory:** Workshop Inventory
-- **Project:** DEMO Satellite Demo Config
-- **Execution Environment:** auto_satellite workshop execution environment
-- **Playbook:** satellite_config_rex.yml
-- **Credential type:** Satellite_Collection
-- **Credential Name:** Satellite Credential
-- **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
-- *Launch the template*
-
----
-
-#### 6. Enable RHEL Remote Execution by creating an AAP job template with the following parameters and then launching it:
-- **Name:** DEMO RHEL Remote Execution
-- **Inventory:** Workshop Inventory
-- **Project:** DEMO Satellite Demo Config
-- **Execution Environment:** auto_satellite workshop execution environment
-- **Playbook:** rhel_configure_rex.yml
-- **Credential type:** Machine
-- **Credential Name:** Workshop Credential
-- **Limit:** rhel7 (case sensitive)
-- **Privilege escalation:** yes
-- *Launch the template*
-
----
-
-#### 7. Install RHEL System Roles in Satellite by creating an AAP job template with the following parameters and then launching it
-**Note:** This requires a RHEL activation key and organisation ID, both of which can be retrieved from your account via https://console.redhat.com/insights/connector/activation-keys.  It will register the system, install the roles, and then immediately unregister the system. 
-
-- **Name:** DEMO Satellite Install System Roles
-- **Inventory:** Workshop Inventory
-- **Project:** DEMO Satellite Demo Config
-- **Execution Environment:** auto_satellite workshop execution environment
-- **Playbook:** satellite_install_system_roles.yml
-- **Credentials:**
-    - Credential Type: Machine
-    - Credential Name: Workshop Credential
-    - Credential Type: Satellite_Collection
-    - Credential Name: Satellite Credential
-- **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
-- **Add the following variables:**
-```
----
-rhn_activation_key: <Activation key>
-rhn_org_id: <Organisation ID>
-```
-- **Save**
-- *Launch the template*
-
----
-
-#### ~~8. Configure RHEL host groups and collections by creating an AAP job template with the following parameters and then launching it~~ 
-### Currently not automated -- Move to Step 9 for the manual steps
+#### ~~6. Configure RHEL host groups and collections by creating an AAP job template with the following parameters and then launching it~~ 
+### Currently not automated -- Move to Step 7 for the manual steps
 - **Name:** DEMO Satellite Configure RHEL hosts
 - **Inventory:** Workshop Inventory
 - **Project:** DEMO Satellite Demo Config
@@ -228,7 +161,7 @@ rhn_org_id: <Organisation ID>
 
 ---
 
-#### 9. (Manual Steps for Step 8.) Configure Host Collection and Host Group for RHEL Machines
+#### 7. (Manual Steps for Step 6.) Configure Host Collection and Host Group for RHEL Machines
 - In Satellite webui go to Hosts -> Host Collections
 - Create Host Collection
     - **Name:** All RHEL Hosts Collection
@@ -251,10 +184,10 @@ rhn_org_id: <Organisation ID>
     5. **Save**
     6. Check that all RHEL hosts belong to the correct group (see Host Group column)
 
-#### 10. Set up Lightspeed (fka Insights) integration
+#### 8. Set up Lightspeed (fka Insights) integration
 - Follow the steps outlined at [Automated Satellite Workshop: Insights Environment Setup](https://github.com/ansible/workshops/blob/devel/exercises/rhdp_auto_satellite/5-setupinsights/README.md) to connect the RHEL hosts to connect hosts to Lightspeed at console.redhat.com
 
-#### 11. Continue with any other configurations you want to perform as per the workshop instructions
+#### 9. Continue with any other configurations you want to perform as per the workshop instructions
 
 
 ## Config in Satellite
