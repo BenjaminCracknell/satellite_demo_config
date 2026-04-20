@@ -20,18 +20,25 @@
       name: "All RHEL hosts collection"
       description: "All RHEL hosts regardless of Lifecycle Environment"
       organization: "Default Organization"
-      hosts:
-        - node1.example.com
-        - node2.example.com
-        - node3.example.com
       state: present
   
+  - name: Add hosts to host collection
+    ansible.builtin.command: >
+      hammer host-collection add-host
+      --name "All RHEL hosts collection"
+      --organization "Default Organization"
+      --host "{{ item }}"
+    loop:
+      - node1.example.com
+      - node2.example.com
+      - node3.example.com
+
   - name: Create a RHEL host group
     theforeman.foreman.hostgroup:
       name: "All RHEL hosts host group"
       state: present
 
-  - name: Modify the hosts
+  - name: Add hosts to host group
     theforeman.foreman.host:
       name: "{{ item }}"
       hostgroup: "All RHEL hosts host group"
