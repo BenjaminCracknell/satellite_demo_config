@@ -5,22 +5,21 @@
   name: Configure RHEL hosts for Remote Execution (REX) from Satellite
   gather_facts: no
 
-  vars:
-    login: &login
-      server_url: "https://{{ lookup('env', 'FOREMAN_SERVER_URL') }}"
-      username: "{{ lookup('env', 'FOREMAN_USER') }}"
-      password: "{{ lookup('env', 'FOREMAN_PASSWORD') }}"
-      validate_certs: no
+  # vars:
+    # login: &login
+    #   server_url: "https://{{ lookup('env', 'FOREMAN_SERVER') }}"
+    #   username: "{{ lookup('env', 'FOREMAN_USER') }}"
+    #   password: "{{ lookup('env', 'FOREMAN_PASSWORD') }}"
+    #   validate_certs: no
 
   tasks:
 
   - name: Debug server_url
     ansible.builtin.debug:
-      msg: "Sat url: {{ login.server_url }}"
+      msg: "Sat url: {{ server_url }}"
 
   - name: Create a RHEL host collection
     theforeman.foreman.host_collection:
-      <<: *login
       name: "All RHEL hosts collection"
       description: "All RHEL hosts regardless of Lifecycle Environment"
       organization: "Default Organization"
