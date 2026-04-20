@@ -21,7 +21,7 @@
 
   - name: Create a RHEL host collection
     theforeman.foreman.host_collection:
-      <<: *login
+#      <<: *login
       name: "All RHEL hosts collection"
       description: "All RHEL hosts regardless of Lifecycle Environment"
       organization: "Default Organization"
