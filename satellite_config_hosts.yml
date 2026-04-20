@@ -14,6 +14,10 @@
 
   tasks:
 
+  - name: Debug server_url
+    ansible.builtin.debug:
+      msg: "Sat url: {{ login.server_url }}"
+
   - name: Create a RHEL host collection
     theforeman.foreman.host_collection:
       <<: *login
