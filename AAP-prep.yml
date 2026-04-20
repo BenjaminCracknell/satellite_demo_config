@@ -28,6 +28,7 @@
         organization: "{{ org_name }}"
         content_view: "{{ item.cv }}"
         lifecycle_environment: "{{ item.env }}"
+        content_source: "satellite.gjvzj.sandbox2356.opentlc.com"
         state: present
       loop: "{{ host_updates }}"
       loop_control:
