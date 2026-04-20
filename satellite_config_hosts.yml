@@ -5,12 +5,12 @@
   name: Configure RHEL hosts for Remote Execution (REX) from Satellite
   gather_facts: no
 
-  vars:
-    login: &login
-      server_url: "{{ lookup('env', 'FOREMAN_SERVER') }}"
-      username: "{{ lookup('env', 'FOREMAN_USER') }}"
-      password: "{{ lookup('env', 'FOREMAN_PASSWORD') }}"
-      validate_certs: no
+  # vars:
+    # login: &login
+    #   server_url: "{{ lookup('env', 'FOREMAN_SERVER') }}"
+    #   username: "{{ lookup('env', 'FOREMAN_USER') }}"
+    #   password: "{{ lookup('env', 'FOREMAN_PASSWORD') }}"
+    #   validate_certs: no
 
   tasks:
 
