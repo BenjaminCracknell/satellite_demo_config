@@ -8,15 +8,15 @@
   vars:
     login: &login
       server_url: "{{ lookup('env', 'SATELLITE_SERVER_URL') }}"
-      username: "{{ lookup('env', 'FOREMAN_USER') }}"
-      password: "{{ lookup('env', 'FOREMAN_PASSWORD') }}"
+      username: "{{ lookup('env', 'SATELLITE_USER') }}"
+      password: "{{ lookup('env', 'SATELLITE_PASSWORD') }}"
       validate_certs: no
 
   tasks:
 
   - name: Debug server_url
     ansible.builtin.debug:
-      msg: "Sat url: {{ login.server_url }} or it could be: {{ lookup('env', 'SATELLITE_HOSTNAME') }}"
+      msg: "Sat url: {{ login.server_url }} or it could be: {{ login.username }} or {{ login.password }}"
 
   - name: Create a RHEL host collection
     theforeman.foreman.host_collection:
