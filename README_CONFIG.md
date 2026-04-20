@@ -29,7 +29,7 @@ We want nodes 1,2,3 to be part of separate Lifecycle Environments
 <!--
 Not Currently Working -- Automation step 1. Set Node2 to QA, and Node3 to Prod:
 #### 1. In AAP create a Job Template with the following paramaters and then launch it
- - **Name:** DEMO Satellite Prepare Lifecycle Environments
+- **Name:** DEMO Satellite Prepare Lifecycle Environments
 - **Inventory:** Workshop Inventory
 - **Project:** DEMO Satellite Demo Config
 - **Execution Environment:** auto_satellite workshop execution environment

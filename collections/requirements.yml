@@ -5,5 +5,5 @@ collections:
   - community.crypto
   - infra.ah_configuration
   - awx.awx
-  - name: ansible.eda
-  - name: infra.controller_configuration
+  - ansible.eda
+  - infra.controller_configuration
