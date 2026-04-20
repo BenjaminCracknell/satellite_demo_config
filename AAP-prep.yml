@@ -5,7 +5,7 @@
 
   vars:
     satellite_user: "admin"
-    #org_name: "Default Organization"
+    org_name: "Default Organization"
   
     host_updates:
       - name: "node2.example.com"
@@ -25,7 +25,7 @@
       redhat.satellite.host:
         validate_certs: true
         name: "{{ item.name }}"
-        #organization: "{{ org_name }}"
+        organization: "{{ org_name }}"
         content_view: "{{ item.cv }}"
         lifecycle_environment: "{{ item.env }}"
         state: present
