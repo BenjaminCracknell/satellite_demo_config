@@ -1,7 +1,6 @@
 ---
-- hosts: satellite
-#  connection: local
-  become: true
+- hosts: localhost
+  connection: local
 
   name: Configure RHEL hosts for Remote Execution (REX) from Satellite
   gather_facts: no
@@ -17,11 +16,11 @@
 
   - name: Debug server_url
     ansible.builtin.debug:
-      msg: "Sat url: {{ login.server_url }} or it could be: {{ login.username }}"
+      msg: "Sat url: {{ login.server_url }} user: {{ login.username }} and host: {{ host}}"
 
   - name: Create a RHEL host collection
     theforeman.foreman.host_collection:
-#      <<: *login
+      <<: *login
       name: "All RHEL hosts collection"
       description: "All RHEL hosts regardless of Lifecycle Environment"
       organization: "Default Organization"
@@ -33,6 +32,9 @@
       --name "All RHEL hosts collection"
       --organization "Default Organization"
       --host "{{ item }}"
+    delegate_to: satellite.example.com
+    vars:
+      ansible_user: "ec2-user"
     loop:
       - node1.example.com
       - node2.example.com
