@@ -1,6 +1,6 @@
 ---
 - hosts: localhost
-  connection: local
+#  connection: local
 
   name: Configure RHEL hosts for Remote Execution (REX) from Satellite
   gather_facts: no
