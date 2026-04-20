@@ -25,7 +25,7 @@
       redhat.satellite.host:
         validate_certs: true
         name: "{{ item.name }}"
-        organization: "{{ org_name }}"
+        #organization: "{{ org_name }}"
         content_view: "{{ item.cv }}"
         lifecycle_environment: "{{ item.env }}"
         state: present
