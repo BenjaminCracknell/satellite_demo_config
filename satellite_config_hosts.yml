@@ -53,12 +53,20 @@
     theforeman.foreman.hostgroup:
       name: "All RHEL hosts host group"
       state: present
+    delegate_to: satellite.example.com
+    vars:
+      ansible_user: "ec2-user"
+
 
   - name: Add hosts to host group
     theforeman.foreman.host:
       name: "{{ item }}"
       hostgroup: "All RHEL hosts host group"
       state: present
+    delegate_to: satellite.example.com
+    vars:
+      ansible_user: "ec2-user"
+
     loop:
       - node1.example.com
       - node2.example.com
