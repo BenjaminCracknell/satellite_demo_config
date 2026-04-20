@@ -1,6 +1,7 @@
 ---
 - hosts: satellite.example.com
-  connection: local
+#  connection: local
+  become: true
 
   name: Configure RHEL hosts for Remote Execution (REX) from Satellite
   gather_facts: no
