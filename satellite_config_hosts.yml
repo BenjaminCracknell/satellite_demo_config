@@ -16,7 +16,7 @@
 
   - name: Debug server_url
     ansible.builtin.debug:
-      msg: "Sat url: {{ login.server_url }} user: {{ login.username }} and host: {{ host}}"
+      msg: "Sat url: {{ login.server_url }} user: {{ login.username }}"
 
   - name: Create a RHEL host collection
     theforeman.foreman.host_collection:
