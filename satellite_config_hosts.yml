@@ -19,6 +19,10 @@
       name: "All RHEL hosts collection"
       description: "All RHEL hosts regardless of Lifecycle Environment"
       organization: "Default Organization"
+      hosts:
+        - node1.example.com
+        - node2.example.com
+        - node3.example.com
       state: present
   
   - name: Create a RHEL host group
@@ -26,14 +30,12 @@
       name: "All RHEL hosts host group"
       state: present
 
-#  - name: Modify the hosts
-#    theforeman.foreman.host:
-#      name: "{{ item }}"
-#      hostgroup: "All RHEL hosts host group"
-#      #config_groups:
-#      #- "All RHEL hosts collection"
-#      state: present
-#    loop:
-#      - node1.example.com
-#      - node2.example.com
-#      - node3.example.com
+  - name: Modify the hosts
+    theforeman.foreman.host:
+      name: "{{ item }}"
+      hostgroup: "All RHEL hosts host group"
+      state: present
+    loop:
+      - node1.example.com
+      - node2.example.com
+      - node3.example.com
