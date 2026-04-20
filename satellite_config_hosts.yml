@@ -16,7 +16,7 @@
 
   - name: Verify where I am actually running
     ansible.builtin.command: hostname
-    delegate_to: satellite.example.com
+    delegate_to: satellite
     register: check_location
 
   - name: Print location info
