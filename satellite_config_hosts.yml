@@ -62,6 +62,7 @@
     when: item not in collection_list.stdout
 
   - name: Create a RHEL host group
+    <<: *login
     theforeman.foreman.hostgroup:
       name: "All RHEL hosts host group"
       state: present
