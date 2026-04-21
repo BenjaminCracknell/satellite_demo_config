@@ -1,39 +1,72 @@
 ---
 - hosts: localhost
-  connection: local
+#  connection: local
 
   name: Configure RHEL hosts for Remote Execution (REX) from Satellite
   gather_facts: no
 
   vars:
     login: &login
-      server_url: "{{ lookup('env', 'FOREMAN_SERVER') }}"
-      username: "{{ lookup('env', 'FOREMAN_USER') }}"
-      password: "{{ lookup('env', 'FOREMAN_PASSWORD') }}"
+      server_url: "{{ lookup('env', 'SATELLITE_SERVER_URL') }}"
+      username: admin
+      password: "{{ lookup('env', 'SATELLITE_PASSWORD') }}"
       validate_certs: no
 
   tasks:
 
   - name: Create a RHEL host collection
     theforeman.foreman.host_collection:
+      <<: *login
       name: "All RHEL hosts collection"
       description: "All RHEL hosts regardless of Lifecycle Environment"
       organization: "Default Organization"
       state: present
   
+  - name: List current hosts in the collection
+    ansible.builtin.command: >
+      hammer host-collection hosts 
+      --name "All RHEL hosts collection"
+      --organization "Default Organization"
+    delegate_to: satellite.example.com
+    register: collection_list
+    changed_when: false
+    vars:
+      ansible_user: "ec2-user"
+
+  - name: Add hosts to host collection
+    ansible.builtin.command: >
+      hammer host-collection add-host
+      --name "All RHEL hosts collection"
+      --organization "Default Organization"
+      --hosts "{{ item }}"
+    delegate_to: satellite.example.com
+    vars:
+      ansible_user: "ec2-user"
+    loop:
+      - node1.example.com
+      - node2.example.com
+      - node3.example.com
+    when: item not in collection_list.stdout
+
   - name: Create a RHEL host group
     theforeman.foreman.hostgroup:
+      <<: *login
       name: "All RHEL hosts host group"
       state: present
+    delegate_to: satellite.example.com
+    vars:
+      ansible_user: "ec2-user"
 
-#  - name: Modify the hosts
-#    theforeman.foreman.host:
-#      name: "{{ item }}"
-#      hostgroup: "All RHEL hosts host group"
-#      #config_groups:
-#      #- "All RHEL hosts collection"
-#      state: present
-#    loop:
-#      - node1.example.com
-#      - node2.example.com
-#      - node3.example.com
+  - name: Add hosts to host group
+    theforeman.foreman.host:
+      <<: *login
+      name: "{{ item }}"
+      hostgroup: "All RHEL hosts host group"
+      state: present
+    delegate_to: satellite.example.com
+    vars:
+      ansible_user: "ec2-user"
+    loop:
+      - node1.example.com
+      - node2.example.com
+      - node3.example.com

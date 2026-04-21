@@ -105,17 +105,17 @@ Execution steps:
 more /etc/chrony.conf
 chronyc sources
 ```
-15. Alt tab Back to GUI
-16. Ensure the hosts are selected
-17. Action -> Run all Ansible roles
-18. Watch it execute on a specific node
-19. Go back and check all completed successfully
-20. Check on the CLI again  
+18. Alt tab Back to GUI
+19. Ensure the hosts are selected
+20. Action -> Run all Ansible roles
+21. Watch it execute on a specific node
+22. Go back and check all completed successfully
+23. Check on the CLI again  
 ```
 more /etc/chrony.conf
 chronyc sources
 ```
-21. Summarise how you have applied a configuration at scale across a group of hosts
+24. Summarise how you have applied a configuration at scale across a group of hosts
 
 # Show SCAP compliance locally
 
