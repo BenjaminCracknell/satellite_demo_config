@@ -62,8 +62,8 @@
     when: item not in collection_list.stdout
 
   - name: Create a RHEL host group
-    <<: *login
     theforeman.foreman.hostgroup:
+      <<: *login
       name: "All RHEL hosts host group"
       state: present
     delegate_to: satellite.example.com
@@ -72,8 +72,8 @@
 
 
   - name: Add hosts to host group
-    <<: *login
     theforeman.foreman.host:
+      <<: *login
       name: "{{ item }}"
       hostgroup: "All RHEL hosts host group"
       state: present
