@@ -146,48 +146,24 @@ rhn_org_id: <Organisation ID>
 
 ---
 
-#### ~~6. Configure RHEL host groups and collections by creating an AAP job template with the following parameters and then launching it~~ 
-### Currently not automated -- Move to Step 7 for the manual steps
+#### 6. Configure RHEL host groups and collections by creating an AAP job template with the following parameters and then launching it
 - **Name:** DEMO Satellite Configure RHEL hosts
 - **Inventory:** Workshop Inventory
 - **Project:** DEMO Satellite Demo Config
-- **Execution Environment:** smart_mgmt workshop execution environment
+- **Execution Environment:** Default execution environment
 - **Playbook:** satellite_config_hosts.yml
-- **Credential Type:** Satellite_Collection
-- **Credential Name:** Satellite Credential
+- **Credentials:**
+    - **Credential Type:** Satellite_Collection
+    - **Credential Name:** Satellite Credential
+    - **Credential Type:** Machine
+    - **Credential Name:** Workshop Credential
 - **Privilege Escalation:** yes
 
-**Note:** You will need to manually add the relevant hosts to the created host groups and host collections, as this has not yet been automated
 
----
-
-#### 7. (Manual Steps for Step 6.) Configure Host Collection and Host Group for RHEL Machines
-- In Satellite webui go to Hosts -> Host Collections
-- Create Host Collection
-    - **Name:** All RHEL Hosts Collection
-    - **Save**
-- Select **ALL RHEL Hosts Collection**
-    1. Go to Hosts
-    2. Click Add
-    3. Select nodes 1,2,3
-    4. Click Add Selected
-- Go to Configure -> Host Groups
-- Create Host Group
-    - **Name:** All RHEL hosts host group
-    - **Submit**
-- Add hosts to the group
-    1. Go to Hosts -> All Hosts
-    2. Select all RHEL hosts (nodes 1,2,3)
-    3. Click the 3 dot burger-menu beside the Search Bar -> Change associations -> Host Group
-    ![Screenshot-Select-Hosts-Group](images/hosts-hostgroup.png)
-    4. Select **All RHEL hosts group** from the drop down
-    5. **Save**
-    6. Check that all RHEL hosts belong to the correct group (see Host Group column)
-
-#### 8. Set up Lightspeed (fka Insights) integration
+#### 7. Set up Lightspeed (fka Insights) integration
 - Follow the steps outlined at [Automated Satellite Workshop: Insights Environment Setup](https://github.com/ansible/workshops/blob/devel/exercises/rhdp_auto_satellite/5-setupinsights/README.md) to connect the RHEL hosts to connect hosts to Lightspeed at console.redhat.com
 
-#### 9. Continue with any other configurations you want to perform as per the workshop instructions
+#### 8. Continue with any other configurations you want to perform as per the workshop instructions
 
 
 ## Config in Satellite
