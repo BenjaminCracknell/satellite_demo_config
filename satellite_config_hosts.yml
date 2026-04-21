@@ -14,19 +14,6 @@
 
   tasks:
 
-  # - name: Verify where I am actually running
-  #   ansible.builtin.command: hostname
-  #   delegate_to: satellite
-  #   register: check_location
-
-  # - name: Print location info
-  #   ansible.builtin.debug:
-  #     msg: "I am running on {{ check_location.stdout }} as {{ ansible_user }}"
-
-  # - name: Debug server_url
-  #   ansible.builtin.debug:
-  #     msg: "Sat url: {{ login.server_url }} user: {{ login.username }}"
-
   - name: Create a RHEL host collection
     theforeman.foreman.host_collection:
       <<: *login
@@ -69,7 +56,6 @@
     delegate_to: satellite.example.com
     vars:
       ansible_user: "ec2-user"
-
 
   - name: Add hosts to host group
     theforeman.foreman.host:
