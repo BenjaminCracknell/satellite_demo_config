@@ -72,6 +72,7 @@
 
 
   - name: Add hosts to host group
+    <<: *login
     theforeman.foreman.host:
       name: "{{ item }}"
       hostgroup: "All RHEL hosts host group"
@@ -79,7 +80,6 @@
     delegate_to: satellite.example.com
     vars:
       ansible_user: "ec2-user"
-
     loop:
       - node1.example.com
       - node2.example.com
