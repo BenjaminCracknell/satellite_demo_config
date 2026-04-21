@@ -24,7 +24,7 @@ The RHEL nodes are already created with the configuration:
 - Nodes 1,2,3 exist on the RHEL7_Dev Life Cycle Environment
 - Nodes 4,5,6 exist on the CENTOS7_Dev Life Cycle Environment
 
-### Configure Environment
+## Configure Environment
 We want nodes 1,2,3 to be part of separate Lifecycle Environments
 <!--
 Not Currently Working -- Automation step 1. Set Node2 to QA, and Node3 to Prod:
@@ -53,7 +53,7 @@ Not Currently Working -- Automation step 1. Set Node2 to QA, and Node3 to Prod:
 ![Edit content view assignment](images/edit-content-view-assignment.png)
 6. Do the same for node3 ensuring to select **RHEL7_Prod**
 
----
+
 
 #### 2. Next we need to update the inventories of these sources
 1. Login to the AAP Console
@@ -66,9 +66,9 @@ Not Currently Working -- Automation step 1. Set Node2 to QA, and Node3 to Prod:
 8. Repeat steps 2-7 selecting the **QA** Environment in the second box of the template
 9. Repeat steps 2-7 selecting the **Prod** Environment in the second box of the template
 
----
 
-### Configure Environment with Automation
+
+## Configure Environment with Automation
 #### 1. Add a new project with the following parameters:
 - **Name:** DEMO Satellite Demo Config
 - **Source Control Type:** GIT
@@ -76,7 +76,7 @@ Not Currently Working -- Automation step 1. Set Node2 to QA, and Node3 to Prod:
 - **Branch:** main
 - **Options:** Clean; Update Revision on Launch
 
----
+
 
 #### 2. Prepare AAP for remote execution by creating an AAP job template with the following parameters and then launching it:
 - **Name:** DEMO Set PythonWarnings
@@ -92,7 +92,10 @@ Not Currently Working -- Automation step 1. Set Node2 to QA, and Node3 to Prod:
 - **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
 - *Launch the template*
 
----
+*Note:* Verify this was successful by checking in AAP -> Settings -> Job Settings -> Extra Environment Variables containing: 
+``` "PYTHONWARNINGS": "ignore:Unverified HTTPS request" ```
+
+
 
 #### 3. Configure Satellite Remote Execution by creating an AAP job template with the following parameters and then launching it:
 - **Name:** DEMO Satellite Remote Execution
@@ -105,7 +108,7 @@ Not Currently Working -- Automation step 1. Set Node2 to QA, and Node3 to Prod:
 - **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
 - *Launch the template*
 
----
+
 
 #### 4. Enable RHEL Remote Execution by creating an AAP job template with the following parameters and then launching it:
 - **Name:** DEMO RHEL Remote Execution
@@ -119,7 +122,7 @@ Not Currently Working -- Automation step 1. Set Node2 to QA, and Node3 to Prod:
 - **Privilege escalation:** yes
 - *Launch the template*
 
----
+
 
 #### 5. Install RHEL System Roles in Satellite by creating an AAP job template with the following parameters and then launching it
 **Note:** This requires a RHEL activation key and organisation ID, both of which can be retrieved from your account via https://console.redhat.com/insights/connector/activation-keys.  It will register the system, install the roles, and then immediately unregister the system. 
@@ -130,10 +133,10 @@ Not Currently Working -- Automation step 1. Set Node2 to QA, and Node3 to Prod:
 - **Execution Environment:** auto_satellite workshop execution environment
 - **Playbook:** satellite_install_system_roles.yml
 - **Credentials:**
-    - Credential Type: Machine
-    - Credential Name: Workshop Credential
-    - Credential Type: Satellite_Collection
-    - Credential Name: Satellite Credential
+    - **Credential Type:** Machine
+    - **Credential Name:** Workshop Credential
+    - **Credential Type:** Satellite_Collection
+    - **Credential Name:** Satellite Credential
 - **Privilege escalation:** yes (even if possibly redundant as it's in the playbook)
 - **Add the following variables:**
 ```
@@ -144,7 +147,7 @@ rhn_org_id: <Organisation ID>
 - **Save**
 - *Launch the template*
 
----
+
 
 #### 6. Configure RHEL host groups and collections by creating an AAP job template with the following parameters and then launching it
 - **Name:** DEMO Satellite Configure RHEL hosts
