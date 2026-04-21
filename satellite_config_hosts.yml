@@ -35,6 +35,17 @@
       organization: "Default Organization"
       state: present
   
+  - name: List current hosts in the collection
+    ansible.builtin.command: >
+      hammer host-collection hosts 
+      --name "All RHEL hosts collection"
+      --organization "Default Organization"
+    delegate_to: satellite.example.com
+    register: collection_list
+    changed_when: false
+    vars:
+      ansible_user: "ec2-user"
+
   - name: Add hosts to host collection
     ansible.builtin.command: >
       hammer host-collection add-host
@@ -48,6 +59,7 @@
       - node1.example.com
       - node2.example.com
       - node3.example.com
+    when: item not in collection_list.stdout
 
   - name: Create a RHEL host group
     theforeman.foreman.hostgroup:
