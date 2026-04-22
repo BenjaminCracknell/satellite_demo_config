@@ -78,30 +78,30 @@ and
 [https://www.redhat.com/en/blog/advanced-ansible-variables-satellite](https://www.redhat.com/en/blog/advanced-ansible-variables-satellite)
 
 Preparation steps:
-1. Configure -> Ansible Roles
+1. Configure -> Ansible -> Roles
 2. Press the button "Import from satellite.example.com"
-3. Check the "Select all" box and click "Submit"
+3. Check the "Select all" box and click "Submit". This selects all the roles even if it appears you are just selecting the roles on the first page.
 
 Execution steps:
 1. Open a terminal CLI session on node1
 2. Start with Hosts -> all hosts view
 3. Explain that all three hosts have been associated with the same host group
-4. Click the "All hosts host group" you can see in the "Host Group" column
+4. Click the "All RHEL hosts host group" you can see in the "Host Group" column
 5. Click Ansible roles
 6. Add rhel-system-roles.timesync if not already added
 7. Submit, and explain that now we need to check the configuration
 8. Click on Configure -> Ansible -> Roles and find the "rhel-system-roles.timesync" role. 
 9. Click the "Variables" button, and then the timesync_ntp_provider parameter. 
 10. Click the "Override" check box, and paste the line below exactly as is into the "Default Value"  
-`chrony`  
+`chrony`
 11. Click "Submit".  You will now see that the value has a flag next to it to tell us that it has been overridden.
 12. Click on the timesync_ntp_servers parameter. 
 13. Click the "Override" check box, and paste the line below exactly as is into the "Default Value"  
-`[{"hostname":"0.au.pool.ntp.org","iburst":"yes"},{"hostname":"1.au.pool.ntp.org","iburst":"yes"}]`  
+`[{"hostname":"0.au.pool.ntp.org","iburst":"yes"},{"hostname":"1.au.pool.ntp.org","iburst":"yes"}]`
 14. Click "Submit".  You will now see that the value has a flag next to it to tell us that it has been overridden.
 15. Go back to hosts -> all hosts
 16. Alt tab to CLI of node1
-17. Run the following commands on the host  
+17. Run the following commands on the host
 ```
 more /etc/chrony.conf
 chronyc sources
