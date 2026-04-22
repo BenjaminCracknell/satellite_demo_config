@@ -63,11 +63,12 @@ Refer to [https://access.redhat.com/discussions/3175851](https://access.redhat.c
 
 1. Go to Hosts -> All Hosts
 2. Select all 3 hosts
-3. Select action -> schedule remote job
-4. Fill in text: `hostname; uptime; whoami`
-5. Click "Submit"
-6. Wait for success
-7. Click on a host and check the output
+3. Select action -> Schedule a job (but not the down arrow next to it)
+4. Accept the defaults for "Category and template"
+5. For "Target hosts and inputs" add the following to the "command" section: `hostname; uptime; whoami`
+6. Click "Run on selected hosts" at the bottom of the screen
+7. Wait for success (execution is basically immediate)
+8. Click on a host and check the output
 
 # Demonstrate system roles
 
