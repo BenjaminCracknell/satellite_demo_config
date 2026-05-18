@@ -1,0 +1,4 @@
+controller_settings:
+  - name: AWX_TASK_ENV
+    value:
+      PYTHONWARNINGS: "ignore:Unverified HTTPS request"
